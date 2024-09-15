@@ -25,7 +25,7 @@ CHAT_QUERY = {
 }
 
 
-@pytest.mark.smokes
+@pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
 def test_elyza_japanese_llama_2_7b_simple(client: DynamicClient,
