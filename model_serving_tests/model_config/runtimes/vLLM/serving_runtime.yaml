@@ -1,0 +1,38 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  name: vllm-runtime
+spec:
+  annotations:
+    sidecar.istio.io/inject: "true"
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    serving.knative.openshift.io/enablePassthrough: "true"
+    opendatahub.io/dashboard: "true"
+    openshift.io/display-name: "vLLLM Openai entry point"
+    prometheus.io/port: '8080'
+    prometheus.io/path: "/metrics/"
+  builtInAdapter:
+    modelLoadingTimeoutMillis: 90000
+  containers:
+    - args:  # Merged with args in inferenceservice
+        - '--port=8080'
+        - '--distributed-executor-backend=mp'
+      image: {{ runtime_image }}
+      name: kserve-container
+      command:
+        - python3
+        - '-m'
+        - {{ entrypoint | default("vllm.entrypoints.openai.api_server") }}
+      ports:
+        - containerPort: 8080
+          name: http1
+          protocol: TCP
+        {% if tgi_raw_port is defined %}
+        - containerPort: {{ tgi_raw_port.port }}
+          name: {{ tgi_raw_port.name }}
+          protocol: {{ tgi_raw_port.protocol }}
+        {% endif %}
+  multiModel: false
+  supportedModelFormats:
+    - autoSelect: true
+      name: pytorch

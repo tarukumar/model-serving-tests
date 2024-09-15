@@ -1,0 +1,111 @@
+[tool.poetry]
+name = "model-serving-tests"
+version = "0.1.0"
+description = ""
+authors = ["tarukumar <Takumar@redhat.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openshift-python-wrapper = "^10.0.59"
+kubernetes = "^30.0.0"
+pyyaml = "^6.0.1"
+pytest = "^8.2.1"
+openshift-python-utilities = "^5.0.51"
+fuzzywuzzy = "^0.18.0"
+pytest-variables = "^3.1.0"
+setuptools = "^70.0.0"
+aiohttp = "^3.8.5"
+requests= "^2.31.0"
+pytest-asyncio = "^0.21.1"
+syrupy= "^4.0.1"
+caikit-nlp-client = "^0.0.8"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "0.3.4"
+pyright = "1.1.356"
+pre-commit = "3.7.0"
+pytest = "^8.3.3"
+[tool.ruff]
+include = ["pyproject.toml", "test/**/*.py"]
+#exclude = ["ods_ci/tests/Resources/Files/pipeline-samples/", "ods_ci/utils/scripts/sealights/"]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+preview = true
+
+# Enable specific linting rules
+select = [
+  "B",   # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "COM", # flake8-commas
+  "E", "W", # pycodestyle errors/warnings
+  "F",   # Pyflakes
+  "FA",  # flake8-future-annotations
+  "FLY", # flynt
+  "G",   # flake8-logging-format
+  "I",   # isort
+  "INP", # flake8-no-pep420
+  "INT", # flake8-gettext
+  "ISC", # flake8-implicit-str-concat
+  "N",   # pep8-naming
+  "NPY002", # numpy-legacy-random
+  "PERF", # Perflint
+  "PGH", # pygrep-hooks
+  "PIE", # misc lints
+  "PL",  # pylint
+  "PYI", # flake8-pyi
+  "Q",   # flake8-quotes
+  "RET", # flake8-return
+  "RUF", # Ruff-specific
+  "S102", # flake8-bandit: exec-builtin
+  "T10", # flake8-debugger
+  "TCH", # type-checking imports
+  "TID", # flake8-tidy-imports
+  "UP",  # pyupgrade
+  "YTT", # flake8-2020
+]
+
+# Disable specific linting rules
+ignore = [
+    "E741", # Ambiguous variable name: `l` (while clarity is important, this rule might be considered overly strict in some contexts)
+    "PLR0904", # Too many public methods (can be subjective; focusing on readability might be better)
+    "PLR0912", # Too many branches (overly strict, sometimes a method can be complex)
+    "PLR0913", # Too many arguments in function definition (can be subjective; focus on readability)
+    "PLR0915", # Too many statements (can be subjective; sometimes necessary for complex logic)
+    "PLR0917", # Too many positional arguments (can be subjective; focus on readability)
+    "PLR2004", # Magic value used in comparison (sometimes useful in specific contexts)
+    "PERF401", # Use a list comprehension (can be less readable in some cases)
+    "PLC1901", # Simplify comparison with empty string (can be overly specific)
+    "PLR6201", # Use a `set` literal for membership testing (can be subjective)
+    "PLR6301", # Method could be a function or static method (can be subjective; depends on design)
+    "PLW1514", # Missing explicit `encoding` argument in `codecs.open` (can be specific and situational)
+    "PLW2901", # Overwritten loop variable (context-dependent; sometimes unavoidable)
+    "RET501", # Avoid explicit `return None` (can be situational; readability can vary)
+    "RET504", # Unnecessary assignment before `return` (can be situational; readability might vary)
+    "RET505", # Unnecessary `else` after `return` (context-dependent; readability might vary)
+    "UP015", # Unnecessary open mode parameters (context-dependent; readability might vary)
+    "UP031", # Use format specifiers instead of percent format (percent formatting is still widely used)
+    "UP032", # Use f-strings instead of `format` call (f-strings are preferred, but `format` is still acceptable)
+    "RET507", # Unnecessary `else` after `continue` (context-dependent; readability might vary)
+    "RET508", # Unnecessary `elif` after `break` (context-dependent; readability might vary)
+]
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# https://docs.astral.sh/ruff/formatter
+[tool.ruff.format]
+line-ending = "lf"
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
