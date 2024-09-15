@@ -19,5 +19,6 @@
 - Install the project's dependencies with `poetry install`.
 - Configure `pre-commit`
 - Run all the tests with `poetry run pytest`
-- To run test with specfic runtime image with diffrent accelerator(supported: nvidia,amd,intel) run below command 
-   example: poetry run pytest -m smoke --runtime-image=quay.io/opendatahub/vllm:stable --accelerator_type=habana
+- To run test with specfic runtime image with diffrent accelerator(supported: nvidia,amd,intel) run below command :
+
+   `poetry run pytest -m smoke --runtime-image=quay.io/opendatahub/vllm:stable --accelerator_type=habana`
