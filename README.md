@@ -18,7 +18,7 @@
 - Make sure you have Poetry installed.
 - Install the project's dependencies with `poetry install`.
 - Configure `pre-commit`
-- When adding a new model. kindly run the test suite using ` poetry run pytest tests/your_tests.py --snapshot-update `. With this snapshot will be automatclly created for each condition of routput comparison. This needs to be done only during intial development. 
+- When adding a new model. kindly run the test suite using ` poetry run pytest tests/your_tests.py --snapshot-update `. With this snapshot will be automatclly created for each condition of the output comparison. This needs to be done only once during intial development. 
 - Run all the tests with `poetry run pytest`
 - To run test with specfic runtime image with diffrent accelerator(supported: nvidia,amd,intel) run below command :
 
