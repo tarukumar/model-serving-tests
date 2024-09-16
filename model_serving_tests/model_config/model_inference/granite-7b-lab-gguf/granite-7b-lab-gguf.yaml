@@ -1,0 +1,63 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    # Overwritten by templates
+    serving.kserve.io/enable-prometheus-scraping: "true"
+    serving.kserve.io/deploymentMode: {{ deployment_mode | default("RawDeployment") }}
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: {{ model_name | default("granite-7b-lab-gguf") }}
+spec:
+  predictor:
+    minReplicas: {{ min_replica | default(1) }}
+    serviceAccountName: modelmesh-serving-sa
+    model:
+      modelFormat:
+        name: {{ model_format | default("pytorch") }}
+      runtime: {{ runtime_name | default("vllm-runtime") }}
+      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/granite-7b-lab-GGUF/") }}
+      args:
+        - --model=/mnt/models/granite-7b-lab-Q4_K_M.gguf
+        - --tensor-parallel-size={{ gpu_count | default("1") }}
+        - --max-model-len=4096
+        - --chat-template=/mnt/models/template_chatml.jinja
+        - --uvicorn-log-level=debug
+        - --served-model-name={{ model_name | default("granite-7b-lab-gguf") }}
+        {% for arg in new_args %}
+        - {{ arg }}
+        {% endfor %}
+      env:
+        - name: HF_HUB_CACHE
+          value: /tmp
+        {% for var in env_vars %}
+        - name: {{ var.name }}
+          value: {{ var.value }}
+        {% endfor %}
+      resources:
+        requests:
+          cpu: "8"
+          memory: "15Gi"
+          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
+        limits:
+          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
+      volumeMounts:
+        {% if gpu_count | default(0) | int >= 2 %}
+        - name: shared-memory
+          mountPath: /dev/shm
+        - name: tmp
+          mountPath: /tmp
+        - name: home
+          mountPath: /home/vllm
+        {% endif %}
+    volumes:
+      {% if gpu_count | default(0) | int >= 2 %}
+      - name: shared-memory
+        emptyDir:
+          medium: Memory
+          sizeLimit: 16Gi
+      - name: tmp
+        emptyDir: {}
+      - name: home
+        emptyDir: {}
+      {% endif %}

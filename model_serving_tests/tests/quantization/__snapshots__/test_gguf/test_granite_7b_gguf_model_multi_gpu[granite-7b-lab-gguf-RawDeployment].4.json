@@ -1,0 +1,11 @@
+{
+  "finish_reason": "length",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "content": "",
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null
+}
