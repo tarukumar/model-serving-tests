@@ -263,4 +263,4 @@ def create_s3_secret_manifest(name="s3_seceret"):
         "aws_secret_access_key": os.getenv('AWS_SECRET_ACCESS_KEY')
     }
     parse_resource_template(yaml_file_path=STORAGE_DIR / f'{name}.yaml', context=data,
-                            output_file_path=INFERE_DIR / f'{name}.yaml')
+                            output_file_path=STORAGE_DIR / f'{name}.yaml')

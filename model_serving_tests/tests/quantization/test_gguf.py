@@ -5,7 +5,7 @@ from ocp_resources.resource import Resource
 from model_serving_tests.endpoint_utility.openai_utility import OpenAIClient
 from model_serving_tests.endpoint_utility.grpc_utility import TGISGRPCPlugin
 from model_serving_tests.tests.utils import create_runtime_manifest_from_template, create_isvc_manifest_from_template, \
-    get_predictor_pod
+    get_predictor_pod, create_s3_secret_manifest
 import logging
 import time
 
@@ -69,6 +69,7 @@ def test_granite_7b_gguf_model_simple(client: DynamicClient,
 
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=1)
+    create_s3_secret_manifest()
     namespace = create_namespace(namespace_name)
     secret = create_secret_from_file(namespace=namespace.name)
     service_account = create_service_account(namespace=namespace.name)
@@ -164,7 +165,7 @@ def test_granite_7b_gguf_model_multi_gpu(client: DynamicClient,
 
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=2)
-
+    create_s3_secret_manifest()
     namespace = create_namespace(namespace_name)
     secret = create_secret_from_file(namespace=namespace.name)
     service_account = create_service_account(namespace=namespace.name)
