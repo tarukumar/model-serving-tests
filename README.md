@@ -15,6 +15,7 @@
 - [tests](https://github.com/tarukumar/model-serving-tests/tree/main/model_serving_tests/tests): tests,constant,utils and pytest fixtures used in the PoC.
 ## Running the tests
 - `export KUBECONFIG=${path to the kubeconfig of your cluster}`, or alternatively `oc login` into your cluster.
+- `export AWS_ACCESS_KEY_ID=<access_id> and export AWS_SECRET_ACCESS_KEY=<access_key>` this needs to be done to downlod model from s3 bucket
 - Make sure you have Poetry installed.
 - Install the project's dependencies with `poetry install`.
 - Configure `pre-commit`
