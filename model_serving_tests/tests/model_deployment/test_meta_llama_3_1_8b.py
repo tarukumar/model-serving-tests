@@ -20,10 +20,12 @@ COMPLETION_QUERY = {
     "output_tokens": 1000
 }
 
-CHAT_QUERY = {
-    "role": "user",
-    "content": "Hey how are you doing today?"
-}
+CHAT_QUERY = [
+    {
+        "role": "user",
+        "content": "Hey how are you doing today?"
+    }
+]
 
 
 @pytest.mark.smoke
@@ -130,19 +132,19 @@ def test_meta_llama_3_1_8b_simple(client: DynamicClient,
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
 def test_meta_llama_3_1_8b_multi_gpu(client: DynamicClient,
-                                            run_static_command: Callable[[str], None],
-                                            response_snapshot: Any,
-                                            create_namespace: Callable[[str], Resource],
-                                            create_secret_from_file: Callable[[str], Resource],
-                                            create_service_account: Callable[[str], Resource],
-                                            create_serving_runtime_from_file: Callable[[str, str], Resource],
-                                            create_isvc_from_file: Callable[[str, str], Resource],
-                                            model_name: str,
-                                            deployment_type: str,
-                                            runtime: str,
-                                            runtime_image: str,
-                                            accelerator_type: str,
-                                            runtime_name: str) -> None:
+                                     run_static_command: Callable[[str], None],
+                                     response_snapshot: Any,
+                                     create_namespace: Callable[[str], Resource],
+                                     create_secret_from_file: Callable[[str], Resource],
+                                     create_service_account: Callable[[str], Resource],
+                                     create_serving_runtime_from_file: Callable[[str, str], Resource],
+                                     create_isvc_from_file: Callable[[str, str], Resource],
+                                     model_name: str,
+                                     deployment_type: str,
+                                     runtime: str,
+                                     runtime_image: str,
+                                     accelerator_type: str,
+                                     runtime_name: str) -> None:
     """
     Test function for validating the deployment and serving of a model with multi-GPU configuration in a Kubernetes environment.
 

@@ -15,14 +15,16 @@ MODEL_NAMES = ["elyza-japanese-llama-2-7b-instruct"]
 DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
 
 COMPLETION_QUERY = {
-    "text": "桜の木についての話を書く" ,
+    "text": "桜の木についての話を書く",
     "output_tokens": 1000
 }
 
-CHAT_QUERY = {
-    "role": "user",
-    "content": "。桜の木は、桜の花が咲くと"
-}
+CHAT_QUERY = [
+    {
+        "role": "user",
+        "content": "。桜の木は、桜の花が咲くと"
+    }
+]
 
 
 @pytest.mark.smoke

@@ -149,7 +149,7 @@ class OpenAIClient:
         """
         if "/v1/chat/completions" in endpoint:
             data = {
-                "messages": [query],
+                "messages": query,
                 "temperature": 0.1,
                 "seed": 1037,
                 "stream": streaming

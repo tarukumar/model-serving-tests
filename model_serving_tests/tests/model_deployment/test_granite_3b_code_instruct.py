@@ -19,10 +19,12 @@ COMPLETION_QUERY = {
     "output_tokens": 1000
 }
 
-CHAT_QUERY = {
-    "role": "user",
-    "content": "Write python code to find even number"
-}
+CHAT_QUERY = [
+    {
+        "role": "user",
+        "content": "Write python code to find even number"
+    }
+]
 
 
 @pytest.mark.smoke
