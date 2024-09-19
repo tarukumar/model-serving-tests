@@ -242,12 +242,14 @@ def create_isvc_manifest_from_template(deployment_mode: Any,
         data["gpu_count"] = gpu_count
 
     # Validate and add new_args if it's a valid list or None
+    # "new_args"= ["--new-arg1=value1", "--new-arg2=value2"],  # New args to add
     if new_args is not None:
         if not isinstance(new_args, list):
             raise ValueError("new_args must be a list or None")
         data["new_args"] = new_args
 
     # Validate and add env_vars if it's a valid list or None
+    # "env_vars"= [{"name": "NEW_VAR1", "value": "value1"}, {"name": "NEW_VAR2", "value": "value2"}]
     if env_vars is not None:
         if not isinstance(env_vars, list):
             raise ValueError("env_vars must be a list or None")
