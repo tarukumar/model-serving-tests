@@ -21,12 +21,15 @@ requests= "^2.31.0"
 pytest-asyncio = "^0.21.1"
 syrupy= "^4.0.1"
 caikit-nlp-client = "^0.0.8"
+pytest-xdist = "^3.6.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "0.3.4"
 pyright = "1.1.356"
 pre-commit = "3.7.0"
 pytest = "^8.3.3"
+pytest-html = "^4.1.1"
+pytest-xdist = "^3.6.1"
 [tool.ruff]
 include = ["pyproject.toml", "test/**/*.py"]
 #exclude = ["ods_ci/tests/Resources/Files/pipeline-samples/", "ods_ci/utils/scripts/sealights/"]
