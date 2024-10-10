@@ -1,8 +1,50 @@
-{
-  "finish_reason": "length",
-  "index": 0,
-  "logprobs": null,
-  "prompt_logprobs": null,
-  "stop_reason": null,
-  "text": "\n\n1. Labrador Retriever - Labrador Retrievers are"
-}
+[
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\n1. Labrador Retriever - Labrador Retrievers are"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\n1. Japanese: ыеは鳥に夏日"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nOnce upon a time, in a world where robots were common,"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nThe Mona Lisa, also known as La Gioconda,"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nComparison:\n\n1. Speed: Artificial Intelligence (AI)"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\n1. The Dartmouth Conference (1956): This"
+  }
+]

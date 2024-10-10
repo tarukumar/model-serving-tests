@@ -4,6 +4,7 @@ import socket
 import ssl
 import sys
 from model_serving_tests.endpoint_utility.utils import generation_pb2_grpc
+
 logger = logging.getLogger(__name__)
 
 
@@ -56,10 +57,7 @@ class TGISGRPCPlugin:
             ],
             params=generation_pb2_grpc.generation__pb2.Parameters(
                 method=generation_pb2_grpc.generation__pb2.GREEDY,
-                stopping=generation_pb2_grpc.generation__pb2.StoppingCriteria(
-                    max_new_tokens=query["output_tokens"],
-                    min_new_tokens=query["output_tokens"]
-                ),
+                sampling=generation_pb2_grpc.generation__pb2.SamplingParameters(seed=1037),
             ),
         )
 
@@ -70,7 +68,7 @@ class TGISGRPCPlugin:
                 "input_tokens": response.input_token_count,
                 "stop_reason": response.stop_reason,
                 "output_text": response.text,
-                "output_tokens": response.generated_token_count or query["output_tokens"],
+                "output_tokens": response.generated_token_count,
             }
         except grpc.RpcError as err:
             logger.error("gRPC Error: %s", err.details())
@@ -86,10 +84,7 @@ class TGISGRPCPlugin:
             request=generation_pb2_grpc.generation__pb2.GenerationRequest(text=query.get("text")),
             params=generation_pb2_grpc.generation__pb2.Parameters(
                 method=generation_pb2_grpc.generation__pb2.GREEDY,
-                stopping=generation_pb2_grpc.generation__pb2.StoppingCriteria(
-                    max_new_tokens=query["output_tokens"],
-                    min_new_tokens=query["output_tokens"]
-                ),
+                sampling=generation_pb2_grpc.generation__pb2.SamplingParameters(seed=1037),
                 response=generation_pb2_grpc.generation__pb2.ResponseOptions(generated_tokens=True)
             ),
         )
