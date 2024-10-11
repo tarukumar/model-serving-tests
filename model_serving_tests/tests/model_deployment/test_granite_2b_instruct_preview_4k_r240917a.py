@@ -342,7 +342,7 @@ def test_granite_2b_instruct_4k_seq_len(client: DynamicClient,
                           "environment variable `VLLM_ALLOW_DEPRECATED_BEAM_SEARCH=1` to suppress this error.")
 @pytest.mark.parametrize("deployment_type", [DEPLOYMENT_TYPES[0]])
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_granite_2b_instruct_4k_seq_len(client: DynamicClient,
+def test_granite_2b_instruct_4k_beam_search(client: DynamicClient,
                                         run_static_command: Callable[[str], None],
                                         create_namespace: Callable[[str], Resource],
                                         create_secret_from_file: Callable[[str], Resource],
@@ -374,8 +374,7 @@ def test_granite_2b_instruct_4k_seq_len(client: DynamicClient,
     namespace_name = model_name.lower()
 
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
-    create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type,
-                                       new_args=["--max-model-len=4"])
+    create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type)
     create_s3_secret_manifest()
     namespace = create_namespace(namespace_name)
     secret = create_secret_from_file(namespace=namespace.name)
