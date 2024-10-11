@@ -1,10 +1,11 @@
 import json
 import logging
 import time
-from typing import Any
+from typing import Any, Optional
 import pytest
 import requests
 from urllib3.exceptions import InsecureRequestWarning
+
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -38,13 +39,14 @@ class OpenAIClient:
         self.model_name = model_name
         self.request_func = self.streaming_request_http if streaming else self.request_http
 
-    def request_http(self, endpoint: str, query: dict) -> Any:
+    def request_http(self, endpoint: str, query: dict, extra_param: Optional[dict] = None) -> Any:
         """
         Sends a HTTP POST request to the specified endpoint and processes the response.
 
         Args:
             endpoint (str): The API endpoint to send the request to.
             query (dict): The query parameters to include in the request.
+            extra_param (dict, optional): Additional parameters to include in the request.
 
         Returns:
             Any: The parsed response from the API.
@@ -53,7 +55,7 @@ class OpenAIClient:
             pytest.Fail: If the request fails due to an exception.
         """
         headers = {"Content-Type": "application/json"}
-        data = self._construct_request_data(endpoint, query)
+        data = self._construct_request_data(endpoint, query, extra_param)
         logger.info(data)
 
         try:
@@ -71,13 +73,14 @@ class OpenAIClient:
             pytest.fail(f"Test failed due to an unexpected exception: {err}")
             return str(err)
 
-    def streaming_request_http(self, endpoint: str, query: dict) -> str:
+    def streaming_request_http(self, endpoint: str, query: dict, extra_param: Optional[dict] = None) -> str:
         """
         Sends a streaming HTTP POST request to the specified endpoint and processes the streamed response.
 
         Args:
             endpoint (str): The API endpoint to send the request to.
             query (dict): The query parameters to include in the request.
+            extra_param (dict, optional): Additional parameters to include in the request.
 
         Returns:
             str: The concatenated streaming response.
@@ -87,7 +90,7 @@ class OpenAIClient:
             json.JSONDecodeError: If there is a JSON decoding error.
         """
         headers = {"Content-Type": "application/json"}
-        data = self._construct_request_data(endpoint, query, streaming=True)
+        data = self._construct_request_data(endpoint, query, extra_param, streaming=True)
         time.sleep(10)
         tokens = []
         try:
@@ -135,18 +138,21 @@ class OpenAIClient:
             logger.exception("Request error")
             return str(err)
 
-    def _construct_request_data(self, endpoint: str, query: dict, streaming: bool = False) -> dict:
+    def _construct_request_data(self, endpoint: str, query: dict, extra_param: Optional[dict] = None,
+                                streaming: bool = False) -> dict:
         """
         Constructs the request data based on the endpoint and query parameters.
 
         Args:
             endpoint (str): The API endpoint to send the request to.
             query (dict): The query parameters to include in the request.
+            extra_param (dict, optional): Additional parameters to include in the request.
             streaming (bool, optional): If True, include streaming parameters. Defaults to False.
 
         Returns:
             dict: The constructed request data.
         """
+        data = {}
         if "/v1/chat/completions" in endpoint:
             data = {
                 "messages": query,
@@ -167,8 +173,13 @@ class OpenAIClient:
                 "seed": 1037,
                 "stream": streaming
             }
+
         if self.model_name:
             data["model"] = self.model_name
+
+        if extra_param:
+            data.update(extra_param)  # Add the extra parameters if provided
+
         return data
 
     def _parse_response(self, endpoint: str, message: dict) -> Any:
