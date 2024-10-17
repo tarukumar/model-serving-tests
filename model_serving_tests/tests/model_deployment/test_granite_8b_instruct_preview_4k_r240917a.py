@@ -258,7 +258,7 @@ def test_granite_8b_instruct_4k_multi_gpu(client: DynamicClient,
         LOGGER.warning("Deployment type is not provided correctly.")
 
 
-@pytest.mark.smokey
+@pytest.mark.smoke
 @pytest.mark.granite4k
 @pytest.mark.xfail(reason="This test is expected to fail with the error input tokens (14) plus prefix length (0) must "
                           "be < 10.for grpc endpoint. For openai endpoint it will throw request error with http status "
