@@ -1,11 +1,35 @@
 [
   {
-    "finish_reason": "length",
+    "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n1. Labrador Retriever: Known for being intelligent,"
+    "text": ""
+  },
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": ""
+  },
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": ""
+  },
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": ""
   },
   {
     "finish_reason": "length",
@@ -13,38 +37,14 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\nIt had always been just another machine, a tool made to perform a"
+    "text": "\n\nWe start by using the third fundamental theorem of calculus to find"
   },
   {
-    "finish_reason": "length",
+    "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\nThe Mona Lisa, painted by Leonardo da Vinci between "
-  },
-  {
-    "finish_reason": "length",
-    "index": 0,
-    "logprobs": null,
-    "prompt_logprobs": null,
-    "stop_reason": null,
-    "text": " Write a few paragraphs about your observations.\n- by Karoline Klo"
-  },
-  {
-    "finish_reason": "length",
-    "index": 0,
-    "logprobs": null,
-    "prompt_logprobs": null,
-    "stop_reason": null,
-    "text": "\n\nLet $a(t) = -32$, $v("
-  },
-  {
-    "finish_reason": "length",
-    "index": 0,
-    "logprobs": null,
-    "prompt_logprobs": null,
-    "stop_reason": null,
-    "text": "\n\n1950s: AI research starts in the 19"
+    "text": ""
   }
 ]

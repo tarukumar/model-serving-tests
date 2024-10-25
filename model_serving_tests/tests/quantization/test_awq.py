@@ -17,21 +17,34 @@ LOGGER = logging.getLogger(__name__)
 MODEL_NAMES = ["openhermes-25-mistral-7b-awq"]
 DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
 
-COMPLETION_QUERY = {
-    "text": "Write a code to find the maximum value in a list of numbers.",
-    "output_tokens": 1000
-}
-
-CHAT_QUERY = [
+COMPLETION_QUERY = [{
+    "text": "List the top five breeds of dogs and their characteristics.",
+},
+    {"text": "Write a short story about a robot that dreams for the first time."},
+    {"text": "Explain the cultural significance of the Mona Lisa painting, and how its perception might vary in "
+             "Western versus Eastern societies."},
     {
-        "role": "system",
-        "content": "You are a helpful assistant."
-    },
+        "text": "Compare and contrast artificial intelligence with human intelligence in terms of processing "
+                "information."},
+    {"text": "Here is a calculus problem. Show your work. An object is moving along a line, with time in seconds, "
+             "and distance in feet. The acceleration of the object at timet is a(t) = -32 feet per second per second. "
+             "The velocity of the object at t = 0 seconds is v(0) = 80 feet per second. The position of the object at "
+             "time t = 0 seconds is s(0) = 10 feet. Find the velocity function v(t), and the position function s(t)."},
+    {"text": "Briefly describe the major milestones in the development of artificial intelligence from 1950 to 2020."}
+]
+CHAT_QUERY = [[
     {
         "role": "user",
-        "content": "Do you have mayonnaise recipes?"
+        "content": "Write python code to find even number"
     }
-]
+], [
+    {"role": "system",
+     "content": "Given a target sentence, construct the underlying meaning representation of the input sentence as a "
+                "single function with attributes and attribute values."},
+    {"role": "user",
+     "content": "SpellForce 3 is a pretty bad game. The developer Grimlore Games is clearly a bunch of no-talent "
+                "hacks, and 2017 was a terrible year for games anyway."}
+]]
 
 
 @pytest.mark.smoke
@@ -97,12 +110,18 @@ def test_openhermes_25_mistral_7b_awq_simple(client: DynamicClient,
         run_static_command(cmd)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
         model_info = tgis_client.get_model_info()
         LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
+        all_token = []
+        stream = []
+        for query in COMPLETION_QUERY:
+            all_tokens = tgis_client.make_grpc_request(query)
+            LOGGER.info(all_tokens)
+            all_token.append(all_tokens)
+            streams = tgis_client.make_grpc_request_stream(query)
+            LOGGER.info(streams)
+            stream.append(streams)
+
         assert all_token == response_snapshot
         assert model_info == response_snapshot
         assert stream == response_snapshot
@@ -110,10 +129,15 @@ def test_openhermes_25_mistral_7b_awq_simple(client: DynamicClient,
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
         url = "http://localhost:8080"
-
+        completion_response = []
         openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        for query in COMPLETION_QUERY:
+            completion_responses = openai_client.request_http(endpoint="/v1/completions", query=query)
+            completion_response.append(completion_responses)
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
@@ -123,8 +147,11 @@ def test_openhermes_25_mistral_7b_awq_simple(client: DynamicClient,
         LOGGER.info(url)
 
         openai_client = OpenAIClient(host=url + ":443", model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY[0])
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
@@ -196,12 +223,18 @@ def test_openhermes_25_mistral_7b_awq_marlin(client: DynamicClient,
         run_static_command(cmd)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
         model_info = tgis_client.get_model_info()
         LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
+        all_token = []
+        stream = []
+        for query in COMPLETION_QUERY:
+            all_tokens = tgis_client.make_grpc_request(query)
+            LOGGER.info(all_tokens)
+            all_token.append(all_tokens)
+            streams = tgis_client.make_grpc_request_stream(query)
+            LOGGER.info(streams)
+            stream.append(streams)
+
         assert all_token == response_snapshot
         assert model_info == response_snapshot
         assert stream == response_snapshot
@@ -209,10 +242,15 @@ def test_openhermes_25_mistral_7b_awq_marlin(client: DynamicClient,
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
         url = "http://localhost:8080"
-
+        completion_response = []
         openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        for query in COMPLETION_QUERY:
+            completion_responses = openai_client.request_http(endpoint="/v1/completions", query=query)
+            completion_response.append(completion_responses)
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
@@ -222,8 +260,11 @@ def test_openhermes_25_mistral_7b_awq_marlin(client: DynamicClient,
         LOGGER.info(url)
 
         openai_client = OpenAIClient(host=url + ":443", model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY[0])
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
@@ -295,12 +336,18 @@ def test_openhermes_25_mistral_7b_awq_quant(client: DynamicClient,
         run_static_command(cmd)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
         model_info = tgis_client.get_model_info()
         LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
+        all_token = []
+        stream = []
+        for query in COMPLETION_QUERY:
+            all_tokens = tgis_client.make_grpc_request(query)
+            LOGGER.info(all_tokens)
+            all_token.append(all_tokens)
+            streams = tgis_client.make_grpc_request_stream(query)
+            LOGGER.info(streams)
+            stream.append(streams)
+
         assert all_token == response_snapshot
         assert model_info == response_snapshot
         assert stream == response_snapshot
@@ -308,10 +355,15 @@ def test_openhermes_25_mistral_7b_awq_quant(client: DynamicClient,
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
         url = "http://localhost:8080"
-
+        completion_response = []
         openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        for query in COMPLETION_QUERY:
+            completion_responses = openai_client.request_http(endpoint="/v1/completions", query=query)
+            completion_response.append(completion_responses)
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
@@ -321,8 +373,11 @@ def test_openhermes_25_mistral_7b_awq_quant(client: DynamicClient,
         LOGGER.info(url)
 
         openai_client = OpenAIClient(host=url + ":443", model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY[0])
+        chat_response = []
+        for query in CHAT_QUERY:
+            chat_responses = openai_client.request_http(endpoint="/v1/chat/completions", query=query)
+            chat_response.append(chat_responses)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot

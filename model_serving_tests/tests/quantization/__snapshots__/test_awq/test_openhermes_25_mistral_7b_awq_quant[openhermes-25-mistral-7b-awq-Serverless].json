@@ -4,5 +4,5 @@
   "logprobs": null,
   "prompt_logprobs": null,
   "stop_reason": null,
-  "text": "\ndef max_val(numbers):\n    max_val = numbers"
+  "text": "\n1. Labrador Retriever: Known for being intelligent,"
 }

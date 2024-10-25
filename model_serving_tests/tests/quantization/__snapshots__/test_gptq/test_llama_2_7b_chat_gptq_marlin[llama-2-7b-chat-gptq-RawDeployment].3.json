@@ -1,8 +1,50 @@
-{
-  "finish_reason": "length",
-  "index": 0,
-  "logprobs": null,
-  "prompt_logprobs": null,
-  "stop_reason": null,
-  "text": "\nWrite a code to find the minimum value in a list of numbers.\n"
-}
+[
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": " everybody loves dogs. but did you know there are over 300"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": " everybody else in the world seems to have dreams, so the robot wonders"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\nThe Mona Lisa painting is one of the most recognizable works of art"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\nArtificial intelligence (AI) has come a long way in recent years"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\nAnswer:\nv(t) = -60 feet per second\n"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\nArtificial intelligence (AI) has come a long way since its in"
+  }
+]

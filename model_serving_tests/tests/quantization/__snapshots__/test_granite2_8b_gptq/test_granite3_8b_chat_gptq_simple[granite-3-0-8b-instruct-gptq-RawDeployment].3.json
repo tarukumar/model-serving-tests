@@ -5,7 +5,7 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n1. Labrador Retriever: Known for being intelligent,"
+    "text": "\n\n1. Labrador Retriever: Known for their friendly, outgoing"
   },
   {
     "finish_reason": "length",
@@ -13,7 +13,7 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\nIt had always been just another machine, a tool made to perform a"
+    "text": "\n\nOnce upon a time, in a bustling metropolis,"
   },
   {
     "finish_reason": "length",
@@ -21,7 +21,7 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\nThe Mona Lisa, painted by Leonardo da Vinci between "
+    "text": "\n\nThe Mona Lisa, painted by Leonardo da V"
   },
   {
     "finish_reason": "length",
@@ -29,7 +29,7 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": " Write a few paragraphs about your observations.\n- by Karoline Klo"
+    "text": "\n\nArtificial Intelligence (AI) and human intelligence (HI) both"
   },
   {
     "finish_reason": "length",
@@ -37,7 +37,7 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\nLet $a(t) = -32$, $v("
+    "text": "\n\nWe start by using the third fundamental theorem of calculus to find"
   },
   {
     "finish_reason": "length",
@@ -45,6 +45,6 @@
     "logprobs": null,
     "prompt_logprobs": null,
     "stop_reason": null,
-    "text": "\n\n1950s: AI research starts in the 19"
+    "text": "\n\n1. 1950: Alan Turing proposes"
   }
 ]

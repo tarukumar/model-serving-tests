@@ -14,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 # The model is convertible to gptq_marlin during runtime based on HW
 # more detail: https://docs.vllm.ai/en/latest/quantization/supported_hardware.html
 
-MODEL_NAMES = ["llama-2-7b-chat-gptq"]
+MODEL_NAMES = ["granite-3-0-8b-instruct-gptq"]
 DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
 
 COMPLETION_QUERY = [{
@@ -50,7 +50,7 @@ CHAT_QUERY = [[
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_llama_2_7b_chat_gptq_simple(client: DynamicClient,
+def test_granite3_8b_chat_gptq_simple(client: DynamicClient,
                                      run_static_command: Callable[[str], None],
                                      response_snapshot: Any,
                                      create_namespace: Callable[[str], Resource],
@@ -87,7 +87,7 @@ def test_llama_2_7b_chat_gptq_simple(client: DynamicClient,
         runtime (str, optional): The runtime environment. Defaults to "vLLM".
         runtime_name (str, optional): The name of the serving runtime. Defaults to "serving_runtime".
     """
-    namespace_name = model_name.lower()
+    namespace_name = "granite3b-8b-gptq"
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=1)
     create_s3_secret_manifest()
@@ -162,7 +162,7 @@ def test_llama_2_7b_chat_gptq_simple(client: DynamicClient,
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_llama_2_7b_chat_gptq_marlin(client: DynamicClient,
+def test_granite3_8b_chat_gptq_marlin(client: DynamicClient,
                                      run_static_command: Callable[[str], None],
                                      response_snapshot: Any,
                                      create_namespace: Callable[[str], Resource],
@@ -199,7 +199,7 @@ def test_llama_2_7b_chat_gptq_marlin(client: DynamicClient,
         runtime (str, optional): The runtime environment. Defaults to "vLLM".
         runtime_name (str, optional): The name of the serving runtime. Defaults to "serving_runtime".
     """
-    namespace_name = model_name.lower()
+    namespace_name = "granite3b-8b-gptq"
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=1,
                                        new_args=["--quantization=marlin"])
@@ -275,7 +275,7 @@ def test_llama_2_7b_chat_gptq_marlin(client: DynamicClient,
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_llama_2_7b_chat_gptq_quant(client: DynamicClient,
+def test_granite_3_8b_chat_gptq_quant(client: DynamicClient,
                                     run_static_command: Callable[[str], None],
                                     response_snapshot: Any,
                                     create_namespace: Callable[[str], Resource],
@@ -312,7 +312,7 @@ def test_llama_2_7b_chat_gptq_quant(client: DynamicClient,
         runtime (str, optional): The runtime environment. Defaults to "vLLM".
         runtime_name (str, optional): The name of the serving runtime. Defaults to "serving_runtime".
     """
-    namespace_name = model_name.lower()
+    namespace_name = "granite3b-8b-gptq"
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=1,
                                        new_args=["--quantization=gptq"])

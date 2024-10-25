@@ -24,7 +24,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--runtime-image",
         action="store",
-        default="quay.io/modh/vllm@sha256:3c56d4c2a5a9565e8b07ba17a6624290c4fb39ac9097b99b946326c09a8b40c8",
+        default="quay.io/modh/vllm@sha256:a8ba53e1b12309913cd958331dd8dda7f2b1fad39f5350d3c722608835e14512",
         help="Specify the runtime image to use for the tests"
     )
 

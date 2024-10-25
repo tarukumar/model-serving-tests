@@ -1,11 +1,24 @@
-{
-  "finish_reason": "stop",
-  "index": 0,
-  "logprobs": null,
-  "message": {
-    "content": "Yes, here are a few mayonnaise recipes for you:\n\n1. Classic Mayonnaise:\nIngredients:\n- 1 large egg yolk\n- 1 teaspoon Dijon mustard\n- 1 teaspoon white wine vinegar\n- 1 teaspoon lemon juice\n- 1/2 teaspoon salt\n- 1/4 teaspoon ground black pepper\n- 1 1/2 cups vegetable oil\n\nInstructions:\n1. In a blender, combine the egg yolk, mustard, vinegar, lemon juice, salt, and pepper. Blend until smooth.\n2. With the blender running, slowly add the oil in a steady stream, blending until the mayonnaise is thick and emulsified.\n3. Store in an airtight container in the refrigerator for up to 1 week.\n\n2. Garlic Mayonnaise:\nIngredients:\n- 1 cup Classic Mayonnaise (recipe above)\n- 1 tablespoon minced garlic\n- 1 tablespoon chopped fresh parsley\n- 1 tablespoon chopped fresh chives\n- Salt and freshly ground black pepper, to taste\n\nInstructions:\n1. In a small bowl, mix together the mayonnaise, garlic, parsley, and chives.\n2. Season with salt and pepper to taste.\n3. Store in an airtight container in the refrigerator for up to 1 week.\n\n3. Chipotle Mayonnaise:\nIngredients:\n- 1 cup Classic Mayonnaise (recipe above)\n- 1 chipotle pepper in adobo sauce, minced\n- 1 tablespoon adobo sauce\n- 1 tablespoon lime juice\n- Salt and freshly ground black pepper, to taste\n\nInstructions:\n1. In a small bowl, mix together the mayonnaise, chipotle pepper, adobo sauce, and lime juice.\n2. Season with salt and pepper to taste.\n3. Store in an airtight container in the refrigerator for up to 1 week.\n\nFeel free to experiment with different flavors and ingredients to create your own unique mayonnaise recipes.",
-    "role": "assistant",
-    "tool_calls": []
+[
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+      "content": "Here's a simple Python code that finds even numbers:\n\n```python\n# Take user input\nnum = int(input(\"Enter a number: \"))\n\n# Check if the number is even\nif num % 2 == 0:\n    print(f\"{num} is an even number.\")\nelse:\n    print(f\"{num} is an odd number.\")\n```\n\nYou can run this code and test it by entering different numbers.",
+      "role": "assistant",
+      "tool_calls": []
+    },
+    "stop_reason": null
   },
-  "stop_reason": null
-}
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+      "content": "game_title: \"SpellForce 3\"\ngame_quality: \"bad\"\ndeveloper: \"Grimlore Games\"\ndeveloper_talent: \"no-talent hacks\"\nyear: \"2017\"\nyear_quality: \"terrible\"\ngenre: \"games\"",
+      "role": "assistant",
+      "tool_calls": []
+    },
+    "stop_reason": null
+  }
+]

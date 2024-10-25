@@ -1,8 +1,50 @@
-{
-  "finish_reason": "length",
-  "index": 0,
-  "logprobs": null,
-  "prompt_logprobs": null,
-  "stop_reason": null,
-  "text": "\ndef max_val(numbers):\n    max_val = numbers"
-}
+[
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n1. Labrador Retriever: Known for being intelligent,"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nIt had always followed its programming to the letter. The robot carried out"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nThe Mona Lisa, painted by Leonardo da Vinci between "
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": " Write a few paragraphs about your observations.\n- by Karoline Klo"
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\nLet $a(t) = -32$, $v("
+  },
+  {
+    "finish_reason": "length",
+    "index": 0,
+    "logprobs": null,
+    "prompt_logprobs": null,
+    "stop_reason": null,
+    "text": "\n\n1950s: AI research starts in the 19"
+  }
+]

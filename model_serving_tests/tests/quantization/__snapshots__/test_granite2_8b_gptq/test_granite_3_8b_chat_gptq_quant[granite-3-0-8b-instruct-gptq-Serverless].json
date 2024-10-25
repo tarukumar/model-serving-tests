@@ -1,5 +1,5 @@
 {
-  "finish_reason": "length",
+  "finish_reason": "stop",
   "index": 0,
   "logprobs": null,
   "prompt_logprobs": null,

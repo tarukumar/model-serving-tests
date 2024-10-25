@@ -1,0 +1,24 @@
+[
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+      "content": "",
+      "role": "assistant",
+      "tool_calls": []
+    },
+    "stop_reason": null
+  },
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+      "content": "The underlying meaning representation of the input sentence can be constructed as a single function with attributes and attribute values as follows:\n\n```\n(game_quality(SpellForce 3, bad),\n developer_quality(Grimlore Games, no_talent, hacks),\n release_year(2017, terrible_year_for_games))\n```\n\nHere, `game_quality` is a function that takes a game and an adjective as arguments and returns a statement about the quality of the game. `developer_quality` is a function that takes a developer and a list of adjectives as arguments and returns a statement about the quality of the developer. `release_year` is a function that takes a year and an adjective as arguments and returns a statement about the quality of the year for games.",
+      "role": "assistant",
+      "tool_calls": []
+    },
+    "stop_reason": null
+  }
+]
