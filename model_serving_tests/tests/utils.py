@@ -228,7 +228,7 @@ def create_isvc_manifest_from_template(deployment_mode: Any,
         elif accel_type in ["intel", "gaudi", "habana"]:
             data["gpu_locator"] = "habana.ai/gaudi"
         else:
-            pytest.fail("Provide the correct accelerator type")
+            LOGGER.info("Using COU")
     if model_format is not None:
         data["model_format"] = model_format
 

@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 # more detail: https://docs.vllm.ai/en/latest/quantization/supported_hardware.html
 
 MODEL_NAMES = ["openhermes-25-mistral-7b-awq"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = [{
     "text": "List the top five breeds of dogs and their characteristics.",

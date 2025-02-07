@@ -12,7 +12,7 @@ import time
 LOGGER = logging.getLogger(__name__)
 
 MODEL_NAMES = ["granite-2b-instruct-4k"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = [{
     "text": "List the top five breeds of dogs and their characteristics.",

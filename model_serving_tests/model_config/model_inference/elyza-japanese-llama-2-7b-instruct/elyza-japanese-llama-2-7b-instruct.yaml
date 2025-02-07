@@ -20,7 +20,6 @@ spec:
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
-        - --tensor-parallel-size={{ gpu_count | default("1") }}
         - --max-model-len=2048
         - --uvicorn-log-level=debug
         - --chat-template=/app/data/template/template_chatml.jinja
@@ -39,9 +38,8 @@ spec:
         requests:
           cpu: "8"
           memory: "15Gi"
-          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
         limits:
-          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
+          memory: "14Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

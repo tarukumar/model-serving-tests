@@ -19,7 +19,6 @@ spec:
       storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/granite-7b-lab-GGUF/") }}
       args:
         - --model=/mnt/models/granite-7b-lab-Q4_K_M.gguf
-        - --tensor-parallel-size={{ gpu_count | default("1") }}
         - --max-model-len=4096
         - --chat-template=/mnt/models/template_chatml.jinja
         - --uvicorn-log-level=debug
@@ -38,9 +37,10 @@ spec:
         requests:
           cpu: "8"
           memory: "15Gi"
-          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
+          
         limits:
-          {{ gpu_locator | default("nvidia.com/gpu") }}: {{ gpu_count | default("1") }}
+          memory: "14Gi"
+          
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

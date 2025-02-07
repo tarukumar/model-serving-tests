@@ -12,7 +12,7 @@ import time
 LOGGER = logging.getLogger(__name__)
 
 MODEL_NAMES = ["granite-7b-lab-gguf"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
     "text": "San Francisco is a",

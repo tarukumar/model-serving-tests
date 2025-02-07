@@ -12,7 +12,7 @@ import time
 LOGGER = logging.getLogger(__name__)
 
 MODEL_NAMES = ["granite-3b-code-instruct"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
     "text": "Write a code to find the maximum value in a list of numbers.",

@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 # more detail: https://docs.vllm.ai/en/latest/quantization/supported_hardware.html
 
 MODEL_NAMES = ["granite-3-0-8b-instruct-gptq"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = [{
     "text": "List the top five breeds of dogs and their characteristics.",

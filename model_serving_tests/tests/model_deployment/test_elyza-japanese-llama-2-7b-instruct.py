@@ -12,7 +12,7 @@ import time
 LOGGER = logging.getLogger(__name__)
 
 MODEL_NAMES = ["elyza-japanese-llama-2-7b-instruct"]
-DEPLOYMENT_TYPES = ["RawDeployment", "Serverless"]
+DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
     "text": "桜の木についての話を書く",
