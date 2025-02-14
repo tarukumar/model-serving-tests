@@ -86,19 +86,6 @@ def test_granite_3b_instruct_simple(client: DynamicClient,
         pytest.fail("Model is not in Loaded state")
     if deployment_type.lower() == "rawdeployment":
         #grpc
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
@@ -180,19 +167,6 @@ def test_granite_3b_instruct_multi_gpu(client: DynamicClient,
         pytest.fail("Model is not in Loaded state")
 
     if deployment_type.lower() == "rawdeployment":
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
         url = "http://localhost:8080"

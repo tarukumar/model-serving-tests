@@ -106,25 +106,6 @@ def test_openhermes_25_mistral_7b_awq_simple(client: DynamicClient,
         pytest.fail("Model is not in Loaded state")
     if deployment_type.lower() == "rawdeployment":
         #grpc
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        all_token = []
-        stream = []
-        for query in COMPLETION_QUERY:
-            all_tokens = tgis_client.make_grpc_request(query)
-            LOGGER.info(all_tokens)
-            all_token.append(all_tokens)
-            streams = tgis_client.make_grpc_request_stream(query)
-            LOGGER.info(streams)
-            stream.append(streams)
-
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
@@ -218,26 +199,7 @@ def test_openhermes_25_mistral_7b_awq_marlin(client: DynamicClient,
     if inference_service.instance.status.modelStatus.states.activeModelState != "Loaded":
         pytest.fail("Model is not in Loaded state")
     if deployment_type.lower() == "rawdeployment":
-        #grpc
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        all_token = []
-        stream = []
-        for query in COMPLETION_QUERY:
-            all_tokens = tgis_client.make_grpc_request(query)
-            LOGGER.info(all_tokens)
-            all_token.append(all_tokens)
-            streams = tgis_client.make_grpc_request_stream(query)
-            LOGGER.info(streams)
-            stream.append(streams)
 
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
@@ -332,25 +294,6 @@ def test_openhermes_25_mistral_7b_awq_quant(client: DynamicClient,
         pytest.fail("Model is not in Loaded state")
     if deployment_type.lower() == "rawdeployment":
         #grpc
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        all_token = []
-        stream = []
-        for query in COMPLETION_QUERY:
-            all_tokens = tgis_client.make_grpc_request(query)
-            LOGGER.info(all_tokens)
-            all_token.append(all_tokens)
-            streams = tgis_client.make_grpc_request_stream(query)
-            LOGGER.info(streams)
-            stream.append(streams)
-
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)

@@ -177,11 +177,6 @@ def create_runtime_manifest_from_template(deployment_type: str, runtime_image: s
             'protocol': 'TCP'
         }
     }
-
-    if deployment_type.lower() != "rawdeployment":
-        del data["tgi_raw_port"]
-        del data["entrypoint"]
-        data["deployment_mode"] = deployment_type
     parse_resource_template(yaml_file_path=RUNTIME_DIR / 'vLLM' / f'{runtime_name}.yaml', context=data,
                             output_file_path=RUNTIME_DIR / 'vLLM' / f'{runtime_name}_updated.yaml')
 
@@ -228,7 +223,7 @@ def create_isvc_manifest_from_template(deployment_mode: Any,
         elif accel_type in ["intel", "gaudi", "habana"]:
             data["gpu_locator"] = "habana.ai/gaudi"
         else:
-            LOGGER.info("Using COU")
+            LOGGER.info("Using CPU")
     if model_format is not None:
         data["model_format"] = model_format
 
