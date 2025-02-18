@@ -34,10 +34,10 @@ spec:
       resources:
         requests:
           cpu: "8"
-          memory: "15Gi"
+          memory: "14Gi"
           
         limits:
-          memory: "14Gi"
+          memory: "15Gi"
           
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
