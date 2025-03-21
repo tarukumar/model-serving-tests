@@ -239,6 +239,7 @@ def create_isvc_manifest_from_template(deployment_mode: Any,
         data["storage_uri"] = storage_uri
 
     if gpu_count is not None:
+        LOGGER.info("no gpu")
         #data["gpu_count"] = gpu_count
 
     # Validate and add new_args if it's a valid list or None
