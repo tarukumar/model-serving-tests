@@ -41,3 +41,4 @@ ibm-granite/granite-34b-code-instruct
 ibm-granite/granite-20b-code-instruct
 meta-llama/Llama-3.2-11B-Vision
 meta-llama/Llama-3.2-90B-Vision-Instruct     
+deepseek-ai/DeepSeek-R1-Distill-Llama-8B
