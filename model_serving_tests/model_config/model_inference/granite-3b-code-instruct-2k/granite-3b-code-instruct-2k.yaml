@@ -7,7 +7,7 @@ metadata:
     serving.kserve.io/deploymentMode: {{ deployment_mode | default("RawDeployment") }}
   labels:
     opendatahub.io/dashboard: "true"
-  name: {{ model_name | default("granite-3b-code-instruct") }}
+  name: {{ model_name | default("granite-3b-code-instruct-2k") }}
 spec:
   predictor:
     minReplicas: {{ min_replica | default(1) }}
@@ -16,13 +16,13 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/granite-3b-code-instruct/") }}
+      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/ibm-granite/granite-3b-code-instruct-2k/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --max-model-len=2048
         - --uvicorn-log-level=debug
-        - --served-model-name={{ model_name | default("granite-3b-code-instruct") }}
+        - --served-model-name={{ model_name | default("granite-3b-code-instruct-2k") }}
         {% for arg in new_args %}
         - {{ arg }}
         {% endfor %}

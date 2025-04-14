@@ -15,7 +15,7 @@ The data includes the following columns:
  ibm-granite/granite-8b-code-base
  intfloat/e5-mistral-7b-instruct
  meta-llama/llama-3-8B-Instruct
- ibm-granite/granite-3b-code-instruct
+ ibm-granite/granite-3b-code-instruct-2k
  ibm-granite/granite-8b-code-instruct
  ibm-granite/granite-7b-lab 
  microsoft/Phi-3-vision-128k-instruct
