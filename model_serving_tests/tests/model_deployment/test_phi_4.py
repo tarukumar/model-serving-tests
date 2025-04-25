@@ -11,11 +11,12 @@ import time
 
 LOGGER = logging.getLogger(__name__)
 
-MODEL_NAMES =  ['deepseek-r1-8b']
+MODEL_NAMES =  ['phi-4']
 DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
-    "text": "List the top five breeds of dogs and their characteristics.",
+    "text": "Explain the cultural significance of the Mona Lisa painting, and how its perception might vary in "
+            "Western versus Eastern societies."
 }
 
 CHAT_QUERY = [
@@ -27,10 +28,10 @@ CHAT_QUERY = [
 
 
 @pytest.mark.smoke
-@pytest.mark.deepseekdistill
+@pytest.mark.phi4
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_deepseek_r1_distill_llama_8b_simple(client: DynamicClient,
+def test_phi_4_simple(client: DynamicClient,
                                     run_static_command: Callable[[str], None],
                                     response_snapshot: Any,
                                     create_namespace: Callable[[str], Resource],
@@ -127,13 +128,13 @@ def test_deepseek_r1_distill_llama_8b_simple(client: DynamicClient,
         LOGGER.warning("Deployment type is not provided correctly.")
 
 @pytest.mark.smoke
-@pytest.mark.deepseekdistill
+@pytest.mark.phi4
 @pytest.mark.xfail(reason="This test is expected to fail with the error input tokens (12) plus prefix length (0) must "
                           "be < 10.for grpc endpoint. For openai endpoint it will throw request error with http status "
                           "400")
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_deepseek_r1_distill_llama_8b_seq_len(client: DynamicClient,
+def test_phi_4_seq_len(client: DynamicClient,
                                         run_static_command: Callable[[str], None],
                                         create_namespace: Callable[[str], Resource],
                                         create_secret_from_file: Callable[[str], Resource],

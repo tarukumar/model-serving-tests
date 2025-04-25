@@ -1,0 +1,12 @@
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "content": "Quantum computing is a type of computing that uses the principles of quantum mechanics to process information. Unlike classical computers, which use bits (0s and 1s) to store and process information, quantum computers use quantum bits, or qubits. Qubits can exist in multiple states at once, thanks to a property called superposition. This allows quantum computers to perform many calculations simultaneously, potentially solving complex problems much faster than classical computers. Another important feature is entanglement, where qubits can be linked in such a way that the state of one instantly influences the state of another, no matter the distance between them.",
+    "reasoning_content": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null
+}
