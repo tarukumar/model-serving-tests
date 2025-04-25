@@ -105,8 +105,10 @@ def test_phi_4_instruct_simple(client: DynamicClient,
         url = "http://localhost:8080"
 
         openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY,
+                                                             extra_param={'temperature': 0})
+        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY,
+                                                             extra_param={'temperature': 0})
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot
