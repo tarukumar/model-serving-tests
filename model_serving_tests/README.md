@@ -15,11 +15,12 @@ The data includes the following columns:
  ibm-granite/granite-8b-code-base
  intfloat/e5-mistral-7b-instruct
  meta-llama/llama-3-8B-Instruct
- ibm-granite/granite-3b-code-instruct
+ ibm-granite/granite-3b-code-instruct-2k
  ibm-granite/granite-8b-code-instruct
  ibm-granite/granite-7b-lab 
  microsoft/Phi-3-vision-128k-instruct
  meta-llama/llama-31-8B-Instruct
+ meta-llama/Llama-3.2-3B-Instruct
  granite-7b-starter
  Granite-7b-redhat-lab
  openhermes-25-mistral-7b-awq
@@ -34,6 +35,7 @@ The data includes the following columns:
  meta-llama/llama-3-405b-instruct (v3.1)
  meta-llama/llama-3-70b-instruct (v3.1)
  meta-llama/llama-3-8b-instruct (v3.1)
+ meta-llama/Llama-3.2-1B-Instruct
  mistralai/mixtral-8x7b-instruct-v01
  mistral/mistral-large-2
  ibm-granite/granite-vision-3.1-2b-preview
@@ -43,3 +45,8 @@ meta-llama/Llama-3.2-11B-Vision
 meta-llama/Llama-3.2-90B-Vision-Instruct     
 deepseek-ai/DeepSeek-R1-Distill-Llama-8B
 tinyllama-1.1b-chat-v1.0
+ibm-granite/granite-3.1-8b-instruct
+tiiuae/Falcon3-7B-Instruct    
+mistralai/Pixtral-12B-Base-2409
+mistralai/Ministral-8B-Instruct-2410
+ministral/Ministral-3b-instruct

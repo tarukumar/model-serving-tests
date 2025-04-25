@@ -1,0 +1,68 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    # Overwritten by templates
+    serving.kserve.io/enable-prometheus-scraping: "true"
+    serving.kserve.io/deploymentMode: {{ deployment_mode | default("RawDeployment") }}
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: {{ model_name | default("pixtral-12b-base-2409") }}
+spec:
+  predictor:
+    minReplicas: {{ min_replica | default(1) }}
+    serviceAccountName: modelmesh-serving-sa
+    model:
+      modelFormat:
+        name: {{ model_format | default("pytorch") }}
+      runtime: {{ runtime_name | default("vllm-runtime") }}
+      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/mistralai/Pixtral-12B-Base-2409/") }}
+      args:
+        - --dtype=bfloat16
+        - --model=/mnt/models
+        - --max-model-len=2048
+        - --uvicorn-log-level=debug
+        - --tokenizer-mode=mistral
+        - --limit-mm-per-prompt
+        - image=2
+        - --load-format=mistral
+        - --config-format=mistral
+        - --served-model-name={{ model_name | default("pixtral-12b-base-2409") }}
+        {% for arg in new_args %}
+        - {{ arg }}
+        {% endfor %}
+      env:
+        - name: HF_HUB_CACHE
+          value: /tmp
+        {% for var in env_vars %}
+        - name: {{ var.name }}
+          value: {{ var.value }}
+        {% endfor %}
+      resources:
+        requests:
+          cpu: "8"
+          memory: "24Gi"
+
+        limits:
+          memory: "30Gi"
+
+      volumeMounts:
+        {% if gpu_count | default(0) | int >= 2 %}
+        - name: shared-memory
+          mountPath: /dev/shm
+        - name: tmp
+          mountPath: /tmp
+        - name: home
+          mountPath: /home/vllm
+        {% endif %}
+    volumes:
+      {% if gpu_count | default(0) | int >= 2 %}
+      - name: shared-memory
+        emptyDir:
+          medium: Memory
+          sizeLimit: 32Gi
+      - name: tmp
+        emptyDir: {}
+      - name: home
+        emptyDir: {}
+      {% endif %}
