@@ -1,0 +1,12 @@
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "content": "The image shows an outdoor scene with a wooden boardwalk that stretches into the distance. The boardwalk is surrounded by lush greenery, including trees and bushes. The sky above is clear and blue, suggesting a sunny day. There are no people or animals visible in the image. The boardwalk appears to be well-maintained and inviting, providing a path for visitors to explore the natural surroundings.",
+    "reasoning_content": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null
+}

@@ -1,0 +1,12 @@
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "content": "IBM Thomas J. Watson Research Center, Yorktown Heights, New York, USA.",
+    "reasoning_content": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null
+}

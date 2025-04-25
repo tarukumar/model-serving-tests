@@ -1,0 +1,6 @@
+{
+  "input_tokens": 0,
+  "output_text": "\n\nHere is the code to find the maximum value in a list of numbers:\n\n```python\ndef find_max(numbers: list) -> int:\n    \"\"\"\n    This function takes a list of numbers as input and returns the maximum value.\n\n    Parameters:\n    numbers (list): A list of integers or floats.\n\n    Returns:\n    int: The maximum value in the list.\n    \"\"\"\n    return max(numbers)\n```\n\n```python\nimport unittest\n\nclass TestFindMax(unittest.TestCase):\n    def test_find_max(self):\n        self.assertEqual(find_max([1, 2, 3, 4, 5]), 5)\n        self.assertEqual(find_max([-1, -2, -3, -4, -5]), -1)\n        self.assertEqual(find_max([0, 1, 2, 3, 4]), 4)\n        self.assertEqual(find_max([100, 20, 30, 40, 50]), 100)\n        self.assertEqual(find_max([-100, -20, -30, -40, -50]), -100)\n\nif __name__ == '__main__':\n    unittest.main(argv=[''], verbosity=2, exit=False)\n```\n\nThis code defines a function `find_max` that takes a list of numbers as input and returns the maximum value using the built-in `max` function. The function is then tested using the `unittest` framework to ensure it works as expected.",
+  "output_tokens": 346,
+  "stop_reason": 2
+}
