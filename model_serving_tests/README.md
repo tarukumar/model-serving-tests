@@ -34,6 +34,7 @@ The data includes the following columns:
  meta-llama/llama-3-405b-instruct (v3.1)
  meta-llama/llama-3-70b-instruct (v3.1)
  meta-llama/llama-3-8b-instruct (v3.1)
+ meta-llama/Llama-3.2-1B-Instruct
  mistralai/mixtral-8x7b-instruct-v01
  mistral/mistral-large-2
  ibm-granite/granite-vision-3.1-2b-preview
