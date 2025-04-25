@@ -20,6 +20,7 @@ The data includes the following columns:
  ibm-granite/granite-7b-lab 
  microsoft/Phi-3-vision-128k-instruct
  meta-llama/llama-31-8B-Instruct
+ meta-llama/Llama-3.2-3B-Instruct
  granite-7b-starter
  Granite-7b-redhat-lab
  openhermes-25-mistral-7b-awq
