@@ -11,7 +11,7 @@ import time
 
 LOGGER = logging.getLogger(__name__)
 
-MODEL_NAMES = ["granite-3b-code-instruct"]
+MODEL_NAMES = ["granite-3b-code-instruct-2k"]
 DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
@@ -30,7 +30,7 @@ CHAT_QUERY = [
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_granite_3b_instruct_simple(client: DynamicClient,
+def test_granite_3b_instruct_2k_simple(client: DynamicClient,
                                     run_static_command: Callable[[str], None],
                                     response_snapshot: Any,
                                     create_namespace: Callable[[str], Resource],
@@ -128,7 +128,7 @@ def test_granite_3b_instruct_simple(client: DynamicClient,
 @pytest.mark.multigpu
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_granite_3b_instruct_multi_gpu(client: DynamicClient,
+def test_granite_3b_instruct_2k_multi_gpu(client: DynamicClient,
                                        run_static_command: Callable[[str], None],
                                        response_snapshot: Any,
                                        create_namespace: Callable[[str], Resource],
