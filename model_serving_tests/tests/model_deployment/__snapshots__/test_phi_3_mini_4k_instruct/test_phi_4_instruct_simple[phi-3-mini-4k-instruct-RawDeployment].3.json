@@ -4,5 +4,5 @@
   "logprobs": null,
   "prompt_logprobs": null,
   "stop_reason": null,
-  "text": " Format your answer as a bullet list, including the breed name followed by its"
+  "text": "\n\n\n### Answer:\n1. Labrador Retriever:"
 }
