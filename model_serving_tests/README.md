@@ -43,3 +43,5 @@ meta-llama/Llama-3.2-11B-Vision
 meta-llama/Llama-3.2-90B-Vision-Instruct     
 deepseek-ai/DeepSeek-R1-Distill-Llama-8B
 mistralai/Ministral-8B-Instruct-2410
+ministral/Ministral-3b-instruct
+
