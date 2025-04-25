@@ -11,18 +11,17 @@ import time
 
 LOGGER = logging.getLogger(__name__)
 
-MODEL_NAMES = ["granite-3b-code-instruct"]
+MODEL_NAMES =  ['llama-3-2-1b-instruct']
 DEPLOYMENT_TYPES = ["RawDeployment"]
 
 COMPLETION_QUERY = {
-    "text": "Write a code to find the maximum value in a list of numbers.",
-    "output_tokens": 1000
+    "text": "List the top five breeds of dogs and their characteristics.",
 }
 
 CHAT_QUERY = [
     {
         "role": "user",
-        "content": "Write python code to find even number"
+        "content": "Explain quantum computing in simple terms."
     }
 ]
 
@@ -30,7 +29,7 @@ CHAT_QUERY = [
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_granite_3b_instruct_simple(client: DynamicClient,
+def test_llama_3_2_1b_instruct_simple(client: DynamicClient,
                                     run_static_command: Callable[[str], None],
                                     response_snapshot: Any,
                                     create_namespace: Callable[[str], Resource],
@@ -105,10 +104,12 @@ def test_granite_3b_instruct_simple(client: DynamicClient,
         url = "http://localhost:8080"
 
         openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
-
+        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY,
+                                                             extra_param={'temperature': 0})
+        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY,
+                                                             extra_param={'temperature': 0})
         assert completion_response == response_snapshot
+        time.sleep(300)
         assert chat_response == response_snapshot
 
     elif deployment_type.lower() == "serverless":
@@ -124,33 +125,31 @@ def test_granite_3b_instruct_simple(client: DynamicClient,
     else:
         LOGGER.warning("Deployment type is not provided correctly.")
 
-
-@pytest.mark.multigpu
+@pytest.mark.smoke
+@pytest.mark.xfail(reason="This test is expected to fail with the error input tokens (12) plus prefix length (0) must "
+                          "be < 10.for grpc endpoint. For openai endpoint it will throw request error with http status "
+                          "400")
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
 @pytest.mark.parametrize("model_name", MODEL_NAMES)
-def test_granite_3b_instruct_multi_gpu(client: DynamicClient,
-                                       run_static_command: Callable[[str], None],
-                                       response_snapshot: Any,
-                                       create_namespace: Callable[[str], Resource],
-                                       create_secret_from_file: Callable[[str], Resource],
-                                       create_service_account: Callable[[str], Resource],
-                                       create_serving_runtime_from_file: Callable[[str, str], Resource],
-                                       create_isvc_from_file: Callable[[str, str], Resource],
-                                       model_name: str,
-                                       deployment_type: str,
-                                       runtime: str,
-                                       runtime_image: str,
-                                       accelerator_type: str,
-                                       runtime_name: str) -> None:
+def test_llama_3_2_1b_instruct_seq_len(client: DynamicClient,
+                                        run_static_command: Callable[[str], None],
+                                        create_namespace: Callable[[str], Resource],
+                                        create_secret_from_file: Callable[[str], Resource],
+                                        create_service_account: Callable[[str], Resource],
+                                        create_serving_runtime_from_file: Callable[[str, str], Resource],
+                                        create_isvc_from_file: Callable[[str, str], Resource],
+                                        model_name: str,
+                                        deployment_type: str,
+                                        runtime: str,
+                                        runtime_image: str,
+                                        accelerator_type: str,
+                                        runtime_name: str) -> None:
     """
-    Test function for validating the deployment and serving of a model with multi-GPU configuration in a Kubernetes environment.
-
-    This function performs similar steps to the simple test, but with a multi-GPU setup and additional configuration.
+    Test function for validating the deployment and serving of a model with small model length
 
     Args:
         client (DynamicClient): The client used to interact with the Kubernetes cluster.
         run_static_command (Callable[[str], None]): A function to execute static commands in the environment.
-        response_snapshot (Any): A snapshot object for response comparison.
         create_namespace (Callable[[str], Resource]): A function to create a new Kubernetes namespace.
         create_secret_from_file (Callable[[str], Secret]): A function to create a Kubernetes secret from a file.
         create_service_account (Callable[[str], ServiceAccount]): A function to create a Kubernetes service account.
@@ -164,7 +163,8 @@ def test_granite_3b_instruct_multi_gpu(client: DynamicClient,
     namespace_name = model_name.lower()
 
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
-    create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=2)
+    create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type,
+                                       new_args=["--max-model-len=10"])
     create_s3_secret_manifest()
     namespace = create_namespace(namespace_name)
     secret = create_secret_from_file(namespace=namespace.name)
@@ -184,36 +184,22 @@ def test_granite_3b_instruct_multi_gpu(client: DynamicClient,
         run_static_command(cmd)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
         model_info = tgis_client.get_model_info()
         LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
-        run_static_command(cmd)
-        url = "http://localhost:8080"
-
-        openai_client = OpenAIClient(host=url, model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
-
-        assert completion_response == response_snapshot
-        assert chat_response == response_snapshot
-
+        try:
+            all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
+            LOGGER.info(all_token)
+            assert response is not None
+        except grpc.RpcError as e:
+            error_message = e.details()
+            if "input tokens (12) plus prefix length (0) must be < 10" in error_message:
+                pytest.xfail(f"Expected failure occurred: {error_message}")
+            else:
+                pytest.fail(f"Unexpected gRPC error: {error_message}")
     elif deployment_type.lower() == "serverless":
         url = inference_service.instance.status.url
         LOGGER.info(url)
-
         openai_client = OpenAIClient(host=url + ":443", model_name=model_name)
-        completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
         chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
-
-        assert completion_response == response_snapshot
-        assert chat_response == response_snapshot
-
     else:
         LOGGER.warning("Deployment type is not provided correctly.")
