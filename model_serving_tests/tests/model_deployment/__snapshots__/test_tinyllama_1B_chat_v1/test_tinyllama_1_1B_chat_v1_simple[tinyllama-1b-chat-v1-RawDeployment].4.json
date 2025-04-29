@@ -1,0 +1,12 @@
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "content": "Here's a Python function that calculates the first 10 digits of the Fibonacci sequence and prints them to the console:\n\n```python\ndef fibonacci_sequence(n):\n    \"\"\"\n    Calculates the first n digits of the Fibonacci sequence.\n    \"\"\"\n    a, b = 0, 1\n    for I in range(n):\n        a, b = b, a + b\n    return [str(i) for I in range(10)]\n\nif __name__ == '__main__':\n    n = int(input(\"Enter the number of digits you want to print: \"))\n    print(fibonacci_sequence(n))\n```\n\nThis function takes an integer `n` as input and returns a list of the first `n` digits of the Fibonacci sequence. The function uses a loop to calculate the sequence and returns a list of strings containing the digits.\n\nTo use this function, simply call it with the desired number of digits:\n\n```\npython fibonacci_sequence.py 10\n```\n\nThis will print the first 10 digits of the Fibonacci sequence to the console.",
+    "reasoning_content": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null
+}

@@ -4,5 +4,5 @@
   "logprobs": null,
   "prompt_logprobs": null,
   "stop_reason": null,
-  "text": "\n\ndef max_value(numbers):\n max_value = numbers["
+  "text": "\n\nHere is the code to find the maximum value in a list of numbers"
 }
