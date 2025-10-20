@@ -88,22 +88,9 @@ def test_tinyllama_1_1B_chat_v1_simple(client: DynamicClient,
         #grpc
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
         run_static_command(cmd)
-        time.sleep(5)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        if not COMPLETION_QUERY["text"].strip():
-           pytest.skip("Empty input text")
-        for attempt in range(3):
-            try:
-                all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-                if all_token.get("output_text"):
-                    break
-            except Exception as e:
-                LOGGER.warning(f"Attempt {attempt+1} failed: {e}")
-                time.sleep(2)
-        else:
-            pytest.fail("gRPC response failed after retries")
-        #all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
+        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
         LOGGER.info(all_token)
         model_info = tgis_client.get_model_info()
         LOGGER.info(model_info)
@@ -115,7 +102,6 @@ def test_tinyllama_1_1B_chat_v1_simple(client: DynamicClient,
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
-        time.sleep(5)
         url = "http://localhost:8080"
         time.sleep(300)
         openai_client = OpenAIClient(host=url, model_name=model_name)
@@ -179,7 +165,7 @@ def test_tinyllama_1_1B_chat_v1_seq_len(client: DynamicClient,
 
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type,
-                                       new_args=["--max-model-len=2048"])
+                                       new_args=["--max-model-len=10"])
     create_s3_secret_manifest()
     namespace = create_namespace(namespace_name)
     secret = create_secret_from_file(namespace=namespace.name)
@@ -197,7 +183,6 @@ def test_tinyllama_1_1B_chat_v1_seq_len(client: DynamicClient,
     if deployment_type.lower() == "rawdeployment":
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
         run_static_command(cmd)
-        time.sleep(5)
         url = "localhost:8033"
         tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
         model_info = tgis_client.get_model_info()
