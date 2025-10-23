@@ -30,6 +30,8 @@ spec:
       env:
         - name: HF_HUB_CACHE
           value: /tmp
+        - name: VLLM_CPU_KVCACHE_SPACE
+          value: '8'
         {% for var in env_vars %}
         - name: {{ var.name }}
           value: {{ var.value }}
