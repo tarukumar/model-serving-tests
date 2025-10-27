@@ -18,6 +18,7 @@ spec:
         - '--port=8080'
         - '--distributed-executor-backend=mp'
         - '--max-model-len=2048'
+        - '---disable-sliding-window=True'
       image: {{ runtime_image }}
       name: kserve-container
       env:
