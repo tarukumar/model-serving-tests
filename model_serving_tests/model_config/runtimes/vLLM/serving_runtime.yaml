@@ -17,13 +17,10 @@ spec:
     - args:  # Merged with args in inferenceservice
         - '--port=8080'
         - '--distributed-executor-backend=mp'
-        - '--max-model-len=2048'
-        - 'disable_sliding_window=True'
+        - 'disable-sliding-window'
       image: {{ runtime_image }}
       name: kserve-container
       env:
-        - name: VLLM_USE_V1
-          value: "0"
         - name: VLLM_CPU_OMP_THREADS_BIND
           value: all
       command:
