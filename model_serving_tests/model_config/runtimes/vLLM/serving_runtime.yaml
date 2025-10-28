@@ -22,6 +22,8 @@ spec:
       image: {{ runtime_image }}
       name: kserve-container
       env:
+        - name: VLLM_USE_V1
+          value: "0"
         - name: VLLM_CPU_OMP_THREADS_BIND
           value: all
       command:
