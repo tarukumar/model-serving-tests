@@ -17,7 +17,7 @@ spec:
     - args:  # Merged with args in inferenceservice
         - '--port=8080'
         - '--distributed-executor-backend=mp'
-        - 'disable-sliding-window'
+        - '--disable-sliding-window'
         - '--max-model-len=8192'
         - '--max-num-batched-tokens=8192'
       image: {{ runtime_image }}
