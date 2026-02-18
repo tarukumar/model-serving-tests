@@ -3,6 +3,8 @@
   "index": 0,
   "logprobs": null,
   "prompt_logprobs": null,
+  "prompt_token_ids": null,
   "stop_reason": null,
-  "text": " Format your answer as a bullet list, including the breed name followed by its"
+  "text": " Format your answer as a bullet list, including the breed name followed by its",
+  "token_ids": null
 }

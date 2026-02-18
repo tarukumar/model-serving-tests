@@ -1,0 +1,44 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  name: vllm-runtime
+spec:
+  annotations:
+    opendatahub.io/dashboard: 'true'
+    openshift.io/display-name: vLLLM Openai entry point
+    prometheus.io/path: /metrics/
+    prometheus.io/port: '8080'
+    serving.knative.openshift.io/enablePassthrough: 'true'
+    sidecar.istio.io/inject: 'true'
+    sidecar.istio.io/rewriteAppHTTPProbers: 'true'
+  builtInAdapter:
+    modelLoadingTimeoutMillis: 90000
+  containers:
+  - args:
+    - --port=8080
+    - --distributed-executor-backend=mp
+    - --disable-sliding-window
+    - --max-model-len=1042
+    - --max-num-batched-tokens=1042
+    command:
+    - python3
+    - -m
+    - vllm.entrypoints.openai.api_server
+    env:
+    - name: VLLM_CPU_OMP_THREADS_BIND
+      value: auto
+    - name: VLLM_CPU_KVCACHE_SPACE
+      value: '8'
+    image: quay.io/rhoai/odh-vllm-cpu-rhel9@sha256:aefdce2cc6e2e4f7ab8366ad2697bc3abde2fb76d19390a7082f8bc9862c8711
+    name: kserve-container
+    ports:
+    - containerPort: 8080
+      name: http1
+      protocol: TCP
+    - containerPort: 8033
+      name: h2c
+      protocol: TCP
+  multiModel: false
+  supportedModelFormats:
+  - autoSelect: true
+    name: pytorch

@@ -1,0 +1,5 @@
+model_serving_tests/storage_config/s3_seceret.yaml
+model_serving_tests/storage_config/s3_seceret.yaml
+__pycache__/
+pytest*.log
+report.html

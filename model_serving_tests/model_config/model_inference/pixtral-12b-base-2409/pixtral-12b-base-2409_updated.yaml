@@ -1,0 +1,41 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: pixtral-12b-base-2409
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --max-model-len=2048
+      - --uvicorn-log-level=debug
+      - --tokenizer-mode=mistral
+      - --limit-mm-per-prompt
+      - image=2
+      - --load-format=mistral
+      - --config-format=mistral
+      - --served-model-name=pixtral-12b-base-2409
+      - --max-model-len=10
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 30Gi
+        requests:
+          cpu: '8'
+          memory: 24Gi
+      runtime: vllm-runtime
+      storageUri: s3://ods-ci-wisdom/mistralai/Pixtral-12B-Base-2409/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null

@@ -1,0 +1,6 @@
+{
+  "input_tokens": 14,
+  "output_text": "\n\n```python\ndef find_max(numbers):\n    max_value = numbers[0]\n    for num in numbers:\n        if num > max_value:\n            max_value = num\n    return max_value\n```\n\nThis code defines a function `find_max` that takes a list of numbers as input. It initializes a variable `max_value` with the first element of the list. Then, it iterates through the remaining elements of the list and compares each element with the current maximum value. If a larger value is found, it updates the `max_value` variable. Finally, it returns the maximum value found.",
+  "output_tokens": 136,
+  "stop_reason": 2
+}

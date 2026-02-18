@@ -1,1 +1,1 @@
-"max_sequence_length: 4096\nmax_new_tokens: 1024\n"
+"max_sequence_length: 8192\nmax_new_tokens: 1024\n"

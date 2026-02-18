@@ -4,47 +4,59 @@
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\n1. Labrador Retriever - Labrador Retrievers are"
+    "text": "\n\n1. Labrador Retriever: Known as the \"gent",
+    "token_ids": null
   },
   {
     "finish_reason": "length",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\n1. Japanese: ыеは鳥に夏日"
+    "text": "\n\nThe correct translation of the English sentence into these languages is:\n\n",
+    "token_ids": null
   },
   {
     "finish_reason": "length",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\nOnce upon a time, in a world where robots were common,"
+    "text": "\n\nIn the heart of a futuristic city, a humanoid robot named",
+    "token_ids": null
   },
   {
     "finish_reason": "length",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\nThe Mona Lisa, also known as La Gioconda,"
+    "text": " The response must be informative, insightful, and engaging, taking into",
+    "token_ids": null
   },
   {
     "finish_reason": "length",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\nComparison:\n\n1. Speed: Artificial Intelligence (AI)"
+    "text": "0\n\nArtificial Intelligence (AI) and human intelligence are two complex",
+    "token_ids": null
   },
   {
     "finish_reason": "length",
     "index": 0,
     "logprobs": null,
     "prompt_logprobs": null,
+    "prompt_token_ids": null,
     "stop_reason": null,
-    "text": "\n\n1. The Dartmouth Conference (1956): This"
+    "text": " The response should be formatted in bullet points.\n\n- **195",
+    "token_ids": null
   }
 ]

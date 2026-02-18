@@ -18,13 +18,15 @@ spec:
         - '--port=8080'
         - '--distributed-executor-backend=mp'
         - '--disable-sliding-window'
-        - '--max-model-len=8192'
-        - '--max-num-batched-tokens=8192'
+        - '--max-model-len=2048'
+        - '--max-num-batched-tokens=2048'
       image: {{ runtime_image }}
       name: kserve-container
       env:
         - name: VLLM_CPU_OMP_THREADS_BIND
-          value: all
+          value: auto
+        - name: VLLM_CPU_KVCACHE_SPACE
+          value: "8"
       command:
         - python3
         - '-m'

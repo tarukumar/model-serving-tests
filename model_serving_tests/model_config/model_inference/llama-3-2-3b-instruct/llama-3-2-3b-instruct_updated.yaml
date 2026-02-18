@@ -1,0 +1,36 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: llama-3-2-3b-instruct
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --uvicorn-log-level=debug
+      - --max-model-len=2048
+      - --served-model-name=llama-3-2-3b-instruct
+      - --max-model-len=10
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 15Gi
+        requests:
+          cpu: '8'
+          memory: 14Gi
+      runtime: vllm-runtime
+      storageUri: s3://ods-ci-wisdom/meta-llama/Llama-3.2-3B-Instruct/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null

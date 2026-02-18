@@ -1,0 +1,34 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: phi-4
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --uvicorn-log-level=debug
+      - --served-model-name=phi-4
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 48Gi
+        requests:
+          cpu: '8'
+          memory: 14Gi
+      runtime: vllm-runtime
+      storageUri: s3://ods-ci-wisdom/microsoft/phi-4
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null

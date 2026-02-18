@@ -3,6 +3,8 @@
   "index": 0,
   "logprobs": null,
   "prompt_logprobs": null,
+  "prompt_token_ids": null,
   "stop_reason": null,
-  "text": " Here are the top five breeds of dogs and their characteristics:\n\n1.  **"
+  "text": " Here are the top five breeds of dogs and their characteristics:\n\n1.  **",
+  "token_ids": null
 }

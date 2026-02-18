@@ -1,0 +1,36 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: deepseek-r1-8b
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --uvicorn-log-level=debug
+      - --max-model-len=2048
+      - --served-model-name=deepseek-r1-8b
+      - --max-model-len=10
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 24Gi
+        requests:
+          cpu: '8'
+          memory: 14Gi
+      runtime: vllm-runtime
+      storageUri: s3://ods-ci-wisdom/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null

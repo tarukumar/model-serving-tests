@@ -1,0 +1,38 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: meta-llama-31-8b
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --max-model-len=2048
+      - --uvicorn-log-level=debug
+      - --chat-template=/app/data/template/template_chatml.jinja
+      - --served-model-name=meta-llama-31-8b
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      - name: VLLM_CPU_KVCACHE_SPACE
+        value: '8'
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 25Gi
+        requests:
+          cpu: '8'
+          memory: 24Gi
+      runtime: vllm-runtime
+      storageUri: s3://ods-ci-wisdom/Meta-Llama-3.1-8B/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null

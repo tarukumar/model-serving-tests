@@ -22,7 +22,7 @@ spec:
         - --model=/mnt/models
         - --uvicorn-log-level=debug
         - --served-model-name={{ model_name | default("tinyllama-1b-chat-v1") }}
-        - --max-model-len=2048
+          #- --max-model-len=2048
         {% for arg in new_args %}
         - {{ arg }}
         {% endfor %}

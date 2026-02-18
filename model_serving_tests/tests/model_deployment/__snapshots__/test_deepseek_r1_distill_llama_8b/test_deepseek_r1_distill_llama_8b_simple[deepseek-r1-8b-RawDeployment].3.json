@@ -3,6 +3,8 @@
   "index": 0,
   "logprobs": null,
   "prompt_logprobs": null,
+  "prompt_token_ids": null,
   "stop_reason": null,
-  "text": " I need to write a short paragraph for each, focusing on their temperament, lifespan"
+  "text": " I need to write a short paragraph for each, focusing on their temperament, lifespan",
+  "token_ids": null
 }

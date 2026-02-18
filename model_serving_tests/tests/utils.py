@@ -169,7 +169,7 @@ def create_runtime_manifest_from_template(deployment_type: str, runtime_image: s
         raw_port (int, optional): The raw port to use. Defaults to 8033.
     """
     data = {
-        "entrypoint": "vllm_tgis_adapter",
+        "entrypoint": "vllm.entrypoints.openai.api_server",
         "runtime_image": runtime_image,
         'tgi_raw_port': {
             'port': raw_port,
