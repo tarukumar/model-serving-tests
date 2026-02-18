@@ -21,7 +21,7 @@ spec:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
-        - --max-model-len=2048
+          #- --max-model-len=2048
         - --served-model-name={{ model_name | default("deepseek-r1-distill-llama-8b") }}
         {% for arg in new_args %}
         - {{ arg }}

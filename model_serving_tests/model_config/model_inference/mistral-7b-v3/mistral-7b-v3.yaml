@@ -23,7 +23,7 @@ spec:
         - --uvicorn-log-level=debug
         - --chat-template=/app/data/template/template_chatml.jinja
         - --served-model-name={{ model_name | default("mistral-7b-v3") }}
-        - --max-model-len=2048
+          #- --max-model-len=2048
         {% for arg in new_args %}
         - {{ arg }}
         {% endfor %}

@@ -20,7 +20,7 @@ spec:
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
-        - --max-model-len=2048
+          #- --max-model-len=2048
         - --uvicorn-log-level=debug
         - --chat-template=/app/data/template/template_chatml.jinja
         - --served-model-name={{ model_name | default("meta-llama-31-8b") }}

@@ -21,7 +21,7 @@ spec:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
-        - --max-model-len=2048
+          # - --max-model-len=2048
         - --served-model-name={{ model_name | default("falcon3-7b-instruct") }}
         {% for arg in new_args %}
         - {{ arg }}

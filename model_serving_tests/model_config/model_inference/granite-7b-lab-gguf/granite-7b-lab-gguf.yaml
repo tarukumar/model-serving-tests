@@ -19,7 +19,7 @@ spec:
       storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/granite-7b-lab-GGUF/") }}
       args:
         - --model=/mnt/models/granite-7b-lab-Q4_K_M.gguf
-        - --max-model-len=4096
+          #- --max-model-len=4096
         - --chat-template=/mnt/models/template_chatml.jinja
         - --uvicorn-log-level=debug
         - --served-model-name={{ model_name | default("granite-7b-lab-gguf") }}

@@ -20,7 +20,7 @@ spec:
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
-        - --max-model-len=2048
+          #- --max-model-len=2048
         - --uvicorn-log-level=debug
         - --tokenizer-mode=mistral
         - --limit-mm-per-prompt
