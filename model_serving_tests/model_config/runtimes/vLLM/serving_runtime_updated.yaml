@@ -12,14 +12,15 @@ spec:
     sidecar.istio.io/inject: 'true'
     sidecar.istio.io/rewriteAppHTTPProbers: 'true'
   builtInAdapter:
-    modelLoadingTimeoutMillis: 90000
+    modelLoadingTimeoutMillis: 1200000
   containers:
   - args:
     - --port=8080
+    - --host=0.0.0.0
     - --distributed-executor-backend=mp
     - --disable-sliding-window
-    - --max-model-len=1042
-    - --max-num-batched-tokens=1042
+    - --max-model-len=512
+    - --max-num-batched-tokens=512
     command:
     - python3
     - -m
@@ -29,7 +30,7 @@ spec:
       value: auto
     - name: VLLM_CPU_KVCACHE_SPACE
       value: '8'
-    image: quay.io/rhoai/odh-vllm-cpu-rhel9@sha256:aefdce2cc6e2e4f7ab8366ad2697bc3abde2fb76d19390a7082f8bc9862c8711
+    image: quay.io/rhoai/odh-vllm-cpu-rhel9@sha256:b1a4f15fcdba9bc27cdd9a7cd13c76334d83b4b35c02092e64a4ea22d673bc4c
     name: kserve-container
     ports:
     - containerPort: 8080
@@ -39,6 +40,8 @@ spec:
       name: h2c
       protocol: TCP
   multiModel: false
+  nodeSelector:
+    kubernetes.io/hostname: worker-1
   supportedModelFormats:
   - autoSelect: true
     name: pytorch

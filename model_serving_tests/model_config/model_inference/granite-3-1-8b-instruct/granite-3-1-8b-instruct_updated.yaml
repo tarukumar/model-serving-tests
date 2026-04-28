@@ -14,7 +14,6 @@ spec:
       args:
       - --dtype=bfloat16
       - --model=/mnt/models
-      - --max-model-len=2048
       - --uvicorn-log-level=debug
       - --served-model-name=granite-3-1-8b-instruct
       - --max-model-len=10
@@ -25,12 +24,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 24Gi
+          memory: 32Gi
         requests:
-          cpu: '8'
-          memory: 20Gi
+          cpu: '12'
+          memory: 30Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/ibm-granite/granite-3.1-8b-instruct/
+      storageUri: s3://odh-bucket/models/granite-3.1-8b-instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

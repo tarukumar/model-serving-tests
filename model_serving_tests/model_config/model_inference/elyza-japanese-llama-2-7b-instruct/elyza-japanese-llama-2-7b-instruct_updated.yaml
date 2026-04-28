@@ -6,7 +6,7 @@ metadata:
     serving.kserve.io/enable-prometheus-scraping: 'true'
   labels:
     opendatahub.io/dashboard: 'true'
-  name: deepseek-r1-8b
+  name: elyza-japanese-llama-2-7b-instruct
 spec:
   predictor:
     minReplicas: 1
@@ -14,9 +14,10 @@ spec:
       args:
       - --dtype=bfloat16
       - --model=/mnt/models
+      - --max-model-len=2048
       - --uvicorn-log-level=debug
-      - --served-model-name=deepseek-r1-8b
-      - --max-model-len=10
+      - --chat-template=/app/data/template/template_chatml.jinja
+      - --served-model-name=elyza-japanese-llama-2-7b-instruct
       env:
       - name: HF_HUB_CACHE
         value: /tmp
@@ -24,12 +25,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 30Gi
+          memory: 15Gi
         requests:
-          cpu: '13'
-          memory: 24Gi
+          cpu: '8'
+          memory: 14Gi
       runtime: vllm-runtime
-      storageUri: s3://odh-bucket/models/deepseek-r1-distill-llama-8b/
+      storageUri: s3://ods-ci-wisdom/ELYZA-japanese-Llama-2-7b-instruct-hf/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

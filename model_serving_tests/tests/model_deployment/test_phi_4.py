@@ -1,5 +1,9 @@
 from typing import Any, Callable
 import pytest
+import re
+import subprocess
+import csv
+import os
 from kubernetes.dynamic.client import DynamicClient
 from ocp_resources.resource import Resource
 from model_serving_tests.endpoint_utility.openai_utility import OpenAIClient
@@ -26,6 +30,77 @@ CHAT_QUERY = [
     }
 ]
 
+def get_vllm_version(namespace, pod_name):
+    cmd = f'oc exec -n {namespace} {pod_name} -- python -c "import vllm; print(vllm.__version__)"'
+    result = subprocess.check_output(cmd, shell=True, text=True)
+    return result.strip()
+
+def get_vllm_throughput_logs(namespace, pod_name):
+    cmd = f"oc logs -n {namespace} {pod_name} | grep 'Avg prompt throughput'"
+    result = subprocess.getoutput(cmd)
+    return result
+
+def log_server_performance(model_name, version, logs):
+    LOGGER.info(f"Model: {model_name}")
+    LOGGER.info(f"VLLM Version: {version}")
+    LOGGER.info("====SERVER LOGS====")
+    LOGGER.info(logs)
+
+def parse_vllm_logs(logs, start_time, used_entries):
+    parsed = []
+    for line in logs.split("\n"):
+        time_match = re.search(r"(\d{2}:\d{2}:\d{2})", line)
+        if not time_match:
+            continue
+        log_time = time_match.group(1)
+
+        if log_time < start_time:
+            continue
+        if line in used_entries:
+            continue
+
+        match = re.search(r"Avg prompt throughput: ([\d.]+) tokens/s, Avg generation throughput: ([\d.]+) tokens/s", line)
+        if match:
+            entry = ({
+                "prompt_tokens_per_sec": float(match.group(1)),
+                "generation_tokens_per_sec": float(match.group(2))
+                })
+            parsed.append(entry)
+            used_entries.add(line)
+
+    return parsed
+
+def save_performance_report(model_name, version, logs, request_type, input_prompt, start_time, used_entries):
+    parsed_logs = parse_vllm_logs(logs, start_time, used_entries)
+
+    last = parsed_logs[-1] if parsed_logs else {}
+    max_prompt = max([x["prompt_tokens_per_sec"] for x in parsed_logs], default=0)
+    max_generation = max([x["generation_tokens_per_sec"] for x in parsed_logs], default=0)
+
+    file_exists = os.path.isfile("performance_report.csv")
+    with open("performance_report.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow([
+                "model",
+                "vllm_version",
+                "request_type",
+                "input_prompt",
+                "last_prompt_tokens_per_sec",
+                "last_generation_tokens_per_sec",
+                "max_prompt_tokens_per_sec",
+                "max_generation_tokens_per_sec"
+                ])
+        writer.writerow([
+            model_name,
+            version,
+            request_type,
+            input_prompt,
+            last.get("prompt_tokens_per_sec", 0),
+            last.get("generation_tokens_per_sec", 0),
+            max_prompt,
+            max_generation
+            ])
 
 @pytest.mark.smoke
 @pytest.mark.phi4
@@ -93,10 +168,26 @@ def test_phi_4_simple(client: DynamicClient,
         url = "http://localhost:8080"
 
         openai_client = OpenAIClient(host=url, model_name=model_name)
+
+        #Get vLLM version
+        vllm_version = get_vllm_version(namespace_name, predictor_pod.name)
+
+        #Completion
+        used_entries = set()
+        start_time = time.strftime("%H:%M:%S")
         completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY,
                                                              extra_param={'temperature': 0})
+        time.sleep(2)
+        completion_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
+        save_performance_report(model_name, vllm_version, completion_logs, "completion", COMPLETION_QUERY["text"], start_time, used_entries)
+
+        #Chat
+        start_time = time.strftime("%H:%M:%S")
         chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY,
                                                              extra_param={'temperature': 0})
+        time.sleep(2)
+        chat_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
+        save_performance_report(model_name, vllm_version, chat_logs, "chat", CHAT_QUERY[0]["content"], start_time, used_entries)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot

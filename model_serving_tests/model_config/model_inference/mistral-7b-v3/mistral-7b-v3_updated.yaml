@@ -17,7 +17,6 @@ spec:
       - --uvicorn-log-level=debug
       - --chat-template=/app/data/template/template_chatml.jinja
       - --served-model-name=mistral-7b-v3
-      - --max-model-len=2048
       - --max-model-len=10
       env:
       - name: HF_HUB_CACHE
@@ -26,12 +25,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 70Gi
+          memory: 30Gi
         requests:
           cpu: '13'
-          memory: 64Gi
+          memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/mistralai/Mistral-7B-Instruct-v0.3/
+      storageUri: s3://odh-bucket/models/Mistral-7B-v0.3
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

@@ -14,7 +14,6 @@ spec:
       args:
       - --dtype=bfloat16
       - --model=/mnt/models
-      - --max-model-len=2048
       - --uvicorn-log-level=debug
       - --chat-template=/app/data/template/template_chatml.jinja
       - --served-model-name=meta-llama-31-8b
@@ -32,7 +31,7 @@ spec:
           cpu: '8'
           memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/Meta-Llama-3.1-8B/
+      storageUri: s3://odh-bucket/models/Meta-Llama-3.1-8B-Instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

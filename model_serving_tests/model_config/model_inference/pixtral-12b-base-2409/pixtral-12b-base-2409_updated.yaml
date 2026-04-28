@@ -14,11 +14,9 @@ spec:
       args:
       - --dtype=bfloat16
       - --model=/mnt/models
-      - --max-model-len=2048
       - --uvicorn-log-level=debug
       - --tokenizer-mode=mistral
-      - --limit-mm-per-prompt
-      - image=2
+      - --limit-mm-per-prompt={"image":2}
       - --load-format=mistral
       - --config-format=mistral
       - --served-model-name=pixtral-12b-base-2409
@@ -30,10 +28,10 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 30Gi
+          memory: 32Gi
         requests:
-          cpu: '8'
-          memory: 24Gi
+          cpu: '16'
+          memory: 32Gi
       runtime: vllm-runtime
       storageUri: s3://ods-ci-wisdom/mistralai/Pixtral-12B-Base-2409/
       volumeMounts: null

@@ -6,7 +6,7 @@ metadata:
     serving.kserve.io/enable-prometheus-scraping: 'true'
   labels:
     opendatahub.io/dashboard: 'true'
-  name: deepseek-r1-8b
+  name: falcon3-7b-instruct
 spec:
   predictor:
     minReplicas: 1
@@ -15,7 +15,7 @@ spec:
       - --dtype=bfloat16
       - --model=/mnt/models
       - --uvicorn-log-level=debug
-      - --served-model-name=deepseek-r1-8b
+      - --served-model-name=falcon3-7b-instruct
       - --max-model-len=10
       env:
       - name: HF_HUB_CACHE
@@ -29,7 +29,7 @@ spec:
           cpu: '13'
           memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://odh-bucket/models/deepseek-r1-distill-llama-8b/
+      storageUri: s3://odh-bucket/models/Falcon3-7B-Instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

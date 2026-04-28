@@ -24,12 +24,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 15Gi
+          memory: 30Gi
         requests:
           cpu: '8'
-          memory: 14Gi
+          memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/phi-3-mini-4k-instruct/
+      storageUri: s3://odh-bucket/models/phi-3-mini-4k-instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

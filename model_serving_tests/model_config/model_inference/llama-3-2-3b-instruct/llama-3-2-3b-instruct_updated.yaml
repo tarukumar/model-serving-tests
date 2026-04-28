@@ -15,7 +15,6 @@ spec:
       - --dtype=bfloat16
       - --model=/mnt/models
       - --uvicorn-log-level=debug
-      - --max-model-len=2048
       - --served-model-name=llama-3-2-3b-instruct
       - --max-model-len=10
       env:
@@ -25,12 +24,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 15Gi
+          memory: 32Gi
         requests:
-          cpu: '8'
-          memory: 14Gi
+          cpu: '12'
+          memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/meta-llama/Llama-3.2-3B-Instruct/
+      storageUri: s3://odh-bucket/models/llama-32-3b-instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

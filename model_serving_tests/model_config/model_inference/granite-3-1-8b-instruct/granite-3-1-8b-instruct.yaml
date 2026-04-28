@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/ibm-granite/granite-3.1-8b-instruct/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/granite-3.1-8b-instruct/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
@@ -35,11 +35,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "20Gi"
+          cpu: "12"
+          memory: "30Gi"
           
         limits:
-          memory: "24Gi"
+          memory: "32Gi"
           
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}

@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/phi-3-mini-4k-instruct/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/phi-3-mini-4k-instruct/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
@@ -35,10 +35,10 @@ spec:
       resources:
         requests:
           cpu: "8"
-          memory: "14Gi"
+          memory: "24Gi"
           
         limits:
-          memory: "15Gi"
+          memory: "30Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

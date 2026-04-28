@@ -220,3 +220,19 @@ class OpenAIClient:
             return message.get("error")
         return message["choices"][0].get('delta', {}).get('content', '') if "/v1/chat/completions" in endpoint else \
             message["choices"][0].get("text", "")
+
+
+def wait_for_openai_server(url: str, timeout: int = 120):
+    start = time.time()
+    while time.time() - start < timeout:
+        try:
+            r = requests.get(url, timeout=3)
+            # If server is up and not returning 5xx, it's ready
+            if r.status_code < 500:
+                return True
+        except Exception:
+            pass
+        time.sleep(2)
+    raise RuntimeError(f"OpenAI endpoint not ready after {timeout} seconds: {url}")
+
+

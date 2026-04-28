@@ -1,1 +1,18 @@
-"max_sequence_length: 2048\nmax_new_tokens: 1024\n"
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "annotations": null,
+    "audio": null,
+    "content": "Absolutely, here are some creative ways to combine bananas and dragonfruit:\n\n1. **Banana and Dragonfruit Smoothie:**\n   - Blend 1 ripe banana, 1 dragonfruit (pitted), 1 cup of milk (or a dairy-free alternative), and a handful of ice cubes until smooth.\n   - Add a spoonful of honey or a drizzle of maple syrup for extra sweetness if needed.\n\n2. **Dragonfruit and Banana Salad:**\n   - Dice 1 dragonfruit and 1 banana.\n   - Mix with a handful of mixed greens, a sprinkle of chia seeds, and a light vinaigrette dressing.\n   - Top with some toasted almonds or walnuts for added crunch.\n\n3. **Banana and Dragonfruit Parfait:**\n   - Layer Greek yogurt, sliced bananas, and dragonfruit in a glass.\n   - Add a drizzle of honey or a sprinkle of granola for extra crunch and sweetness.\n\n4. **Dragonfruit and Banana Sorbet:**\n   - Blend 1 ripe banana, 1 dragonfruit (pitted), and a splash of lime juice.\n   - Freeze the mixture in an ice cube tray, then blend again until smooth and creamy.\n   - Freeze in an airtight container for a few hours before serving.\n\n5. **Banana and Dragonfruit Fruit Salad:**\n   - Dice 1 dragonfruit and 1 banana.\n   - Mix with other fruits like strawberries, blueberries, and pineapple.\n   - Serve with a dollop of coconut whipped cream or a drizzle of honey.\n\n6. **Dragonfruit and Banana Smoothie Bowl:**\n   - Blend 1 ripe banana, 1 dragonfruit (pitted), and a splash of milk (or a dairy-free alternative) until thick.\n   - Pour into a bowl and top with granola, coconut flakes, and fresh berries.\n\n7. **Banana and Dragonfruit Popsicles:**\n   - Blend 1 ripe banana, 1 dragonfruit (pitted), and a splash of lime juice.\n   - Pour the mixture into popsicle molds and freeze for at least 4 hours.\n   - Enjoy as a refreshing treat on a hot day.",
+    "function_call": null,
+    "reasoning": null,
+    "reasoning_content": null,
+    "refusal": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null,
+  "token_ids": null
+}

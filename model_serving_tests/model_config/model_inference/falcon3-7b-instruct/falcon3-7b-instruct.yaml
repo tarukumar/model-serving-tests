@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/tiiuae/Falcon3-7B-Instruct/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/Falcon3-7B-Instruct/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
@@ -35,11 +35,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "14Gi"
+          cpu: "13"
+          memory: "24Gi"
           
         limits:
-          memory: "28Gi"
+          memory: "30Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

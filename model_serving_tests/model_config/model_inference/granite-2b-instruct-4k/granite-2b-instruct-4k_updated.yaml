@@ -16,6 +16,7 @@ spec:
       - --model=/mnt/models
       - --uvicorn-log-level=debug
       - --served-model-name=granite-2b-instruct-4k
+      - --max-model-len=4
       env:
       - name: HF_HUB_CACHE
         value: /tmp

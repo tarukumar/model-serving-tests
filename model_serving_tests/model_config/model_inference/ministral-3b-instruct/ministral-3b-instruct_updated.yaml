@@ -15,7 +15,6 @@ spec:
       - --dtype=bfloat16
       - --model=/mnt/models
       - --uvicorn-log-level=debug
-      - --max-model-len=2048
       - --served-model-name=ministral-3b-instruct
       - --max-model-len=10
       env:
@@ -25,12 +24,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 15Gi
+          memory: 28Gi
         requests:
-          cpu: '8'
-          memory: 14Gi
+          cpu: '12'
+          memory: 28Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/ministral/Ministral-3b-instruct/
+      storageUri: s3://odh-bucket/models/ministral-3b-instruct
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

@@ -16,7 +16,6 @@ spec:
       - --model=/mnt/models
       - --uvicorn-log-level=debug
       - --served-model-name=tinyllama-1b-chat-v1
-      - --max-model-len=10
       env:
       - name: HF_HUB_CACHE
         value: /tmp
@@ -29,7 +28,7 @@ spec:
           cpu: '8'
           memory: 14Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/TinyLlama/tinyllama-1.1b-chat-v1.0/
+      storageUri: s3://odh-bucket/models/tinyllama-1.1b-chat-v1.0/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

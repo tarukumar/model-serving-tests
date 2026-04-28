@@ -16,7 +16,8 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/meta-llama/Llama-3.2-1B-Instruct/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/llama-32-1b-instruct/") }}
+      #storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/meta-llama/Llama-3.2-1B-Instruct/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models

@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/mistralai/Mistral-7B-Instruct-v0.3/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/Mistral-7B-v0.3") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
@@ -37,10 +37,10 @@ spec:
       resources:
         requests:
           cpu: "13"
-          memory: "64Gi"
+          memory: "24Gi"
           
         limits:
-          memory: "70Gi"
+          memory: "30Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory
