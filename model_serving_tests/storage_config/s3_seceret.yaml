@@ -8,5 +8,5 @@ metadata:
     serving.kserve.io/s3-usehttps: '1'
   name: models-bucket-secret
 stringData:
-  AWS_ACCESS_KEY_ID: fa8fb43c0e4f4f95834a1265bedb6e7c
-  AWS_SECRET_ACCESS_KEY: 2389b0d3a9157e3060b092663520467efdabe72a389b54b7
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}

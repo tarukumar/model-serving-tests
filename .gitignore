@@ -1,5 +1,3 @@
-model_serving_tests/storage_config/s3_seceret.yaml
-model_serving_tests/storage_config/s3_seceret.yaml
 kserve_raw_deepseek_tests.log
 kserve_raw_falcon_tests.log
 kserve_raw_granite38b_tests.log
@@ -27,3 +25,5 @@ performance_report.xlsx
 poetry.patch
 report.html
 kserve_raw_phi4_tests.log
+model_serving_tests/tests/model_deployment/__snapshots__/test_llama_3_2_1b_instruct/test_llama_3_2_1b_instruct_simple[llama-3-2-1b-instruct-RawDeployment].1.json
+model_serving_tests/tests/model_deployment/__snapshots__/test_llama_3_2_3b_instruct/test_llama_3_2_3b_instruct_simple[llama-3-2-3b-instruct-RawDeployment].1.json
