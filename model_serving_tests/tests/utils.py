@@ -1,7 +1,10 @@
 import os
 
 import pytest
-
+import re
+import subprocess
+import csv
+from datetime import datetime
 from .conftest import client
 import asyncio
 import aiohttp
@@ -267,3 +270,86 @@ def create_s3_secret_manifest(name="s3_seceret"):
     }
     parse_resource_template(yaml_file_path=STORAGE_DIR / f'{name}.yaml', context=data,
                             output_file_path=STORAGE_DIR / f'{name}.yaml')
+
+#Performance Helper Methods
+
+def get_vllm_version(namespace, pod_name):
+    cmd = f'oc exec -n {namespace} {pod_name} -- python -c "import vllm; print(vllm.__version__)"'
+    result = subprocess.check_output(cmd, shell=True, text=True)
+    return result.strip()
+
+def get_vllm_throughput_logs(namespace, pod_name):
+    cmd = f"oc logs -n {namespace} {pod_name} | grep 'Avg prompt throughput'"
+    result = subprocess.getoutput(cmd)
+    return result
+
+def parse_vllm_logs(logs, start_time, used_entries):
+    parsed = []
+
+    try:
+        start_dt = datetime.strptime(start_time, "%H:%M:%S")
+    except Exception:
+        start_dt = None
+
+    for line in logs.split("\n"):
+        time_match = re.search(r"(\d{2}:\d{2}:\d{2})", line)
+        if not time_match:
+            continue
+
+        try:
+            log_dt = datetime.strptime(time_match.group(1), "%H:%M:%S")
+        except Exception:
+            continue
+
+        # Filter only new logs (AFTER request)
+        if start_dt and (log_dt - start_dt).total_seconds() < 0:
+            continue
+        # Avoid duplicate log lines
+        if line in used_entries:
+            continue
+
+        match = re.search(
+            r"Avg prompt throughput: ([\d.]+) tokens/s, Avg generation throughput: ([\d.]+) tokens/s",
+            line
+        )
+
+        if match:
+            parsed.append({
+                "prompt_tokens_per_sec": float(match.group(1)),
+                "generation_tokens_per_sec": float(match.group(2))
+            })
+            used_entries.add(line)
+
+    return parsed
+
+def save_performance_report(model_name, version, logs, request_type, input_prompt, start_time, used_entries):
+    parsed_logs = parse_vllm_logs(logs, start_time, used_entries)
+
+    last = parsed_logs[-1] if parsed_logs else {}
+    max_prompt = max([x["prompt_tokens_per_sec"] for x in parsed_logs], default=0)
+    max_generation = max([x["generation_tokens_per_sec"] for x in parsed_logs], default=0)
+
+    file_exists = os.path.isfile("performance_report.csv")
+    with open("performance_report.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow([
+                "model",
+                "vllm_version",
+                "request_type",
+                "input_prompt",
+                "last_prompt_tokens_per_sec",
+                "last_generation_tokens_per_sec",
+                "max_prompt_tokens_per_sec",
+                "max_generation_tokens_per_sec"
+                ])
+        writer.writerow([
+            model_name,
+            version,
+            request_type,
+            input_prompt,
+            last.get("prompt_tokens_per_sec", 0),
+            last.get("generation_tokens_per_sec", 0),
+            max_prompt,
+            max_generation
+            ])
