@@ -30,7 +30,7 @@ spec:
       value: auto
     - name: VLLM_CPU_KVCACHE_SPACE
       value: '8'
-    image: quay.io/rhoai/odh-vllm-cpu-rhel9@sha256:1aa8aa11af25c821db17936bcc04ebd03473df5bd7cc42a9d939657a16eb5a6e
+    image: quay.io/rhoai/odh-vllm-cpu-rhel9@sha256:1aad95ef7f24b0662484fea025eb2ed36459aa3d66c402e47044185d5291f184
     name: kserve-container
     ports:
     - containerPort: 8080

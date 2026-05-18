@@ -115,14 +115,9 @@ def test_granite_2b_instruct_4k_simple(client: DynamicClient,
         completion_response = []
         openai_client = OpenAIClient(host=url, model_name=model_name)
 
-        used_entries_completion = set()
-        start_time = time.strftime("%H:%M:%S")
         for query in COMPLETION_QUERY:
             completion_responses = openai_client.request_http(endpoint="/v1/completions", query=query)
             completion_response.append(completion_responses)
-        time.sleep(2)
-        completion_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
-        save_performance_report(model_name, vllm_version, completion_logs, "completion", COMPLETION_QUERY["text"], start_time, used_entries_completion)
 
         chat_response = []
         used_entries_chat = set()

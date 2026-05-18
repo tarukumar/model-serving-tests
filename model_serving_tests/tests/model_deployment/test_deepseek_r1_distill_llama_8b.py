@@ -99,13 +99,8 @@ def test_deepseek_r1_distill_llama_8b_simple(client: DynamicClient,
         #Get vLLM version
         vllm_version = get_vllm_version(namespace_name, predictor_pod.name)
         
-        used_entries_completion = set()
-        start_time = time.strftime("%H:%M:%S")
         completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY,
                                                              extra_param={'temperature': 0})
-        time.sleep(2)
-        completion_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
-        save_performance_report(model_name, vllm_version, completion_logs, "completion", COMPLETION_QUERY["text"], start_time, used_entries_completion)
 
         used_entries_chat = set()
         start_time = time.strftime("%H:%M:%S")

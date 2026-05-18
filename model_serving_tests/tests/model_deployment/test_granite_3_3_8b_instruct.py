@@ -101,15 +101,8 @@ def test_granite_3_3_8B_instruct_simple(client: DynamicClient,
         #vLLM version 
         vllm_version = get_vllm_version(namespace_name, predictor_pod.name)
         
-        #Completion
-        used_entries_completion = set()
-        start_time = time.strftime("%H:%M:%S")
         completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
-        time.sleep(2)
-        completion_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
-        save_performance_report(model_name, vllm_version, completion_logs, "completion", COMPLETION_QUERY["text"], start_time, used_entries_completion)
 
-        #Chat
         used_entries_chat = set()
         start_time = time.strftime("%H:%M:%S")
         chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
