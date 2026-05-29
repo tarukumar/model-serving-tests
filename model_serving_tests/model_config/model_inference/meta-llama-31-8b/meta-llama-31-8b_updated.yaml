@@ -26,10 +26,10 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 25Gi
+          memory: 32Gi
         requests:
-          cpu: '8'
-          memory: 24Gi
+          cpu: '12'
+          memory: 32Gi
       runtime: vllm-runtime
       storageUri: s3://odh-bucket/models/Meta-Llama-3.1-8B-Instruct/
       volumeMounts: null

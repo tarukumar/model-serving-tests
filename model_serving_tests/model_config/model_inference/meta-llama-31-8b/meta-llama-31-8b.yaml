@@ -39,11 +39,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "24Gi"
+          cpu: "12"
+          memory: "32Gi"
           
         limits:
-          memory: "25Gi"
+          memory: "32Gi"
           
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}

@@ -25,12 +25,12 @@ spec:
         name: pytorch
       resources:
         limits:
-          memory: 15Gi
+          memory: 28Gi
         requests:
-          cpu: '8'
-          memory: 14Gi
+          cpu: '12'
+          memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/ELYZA-japanese-Llama-2-7b-instruct-hf/
+      storageUri: s3://odh-bucket/models/ELYZA-japanese-Llama-2-7b-instruct/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null
