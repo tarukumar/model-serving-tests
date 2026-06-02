@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/ibm-granite/granite-3b-code-instruct-2k/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/granite-3b-code-instruct-2k/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models

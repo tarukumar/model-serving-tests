@@ -28,7 +28,7 @@ spec:
           cpu: '8'
           memory: 24Gi
       runtime: vllm-runtime
-      storageUri: s3://ods-ci-wisdom/ibm-granite/granite-3b-code-instruct-2k/
+      storageUri: s3://odh-bucket/models/granite-3b-code-instruct-2k/
       volumeMounts: null
     serviceAccountName: modelmesh-serving-sa
     volumes: null

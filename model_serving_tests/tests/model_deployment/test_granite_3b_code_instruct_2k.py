@@ -70,7 +70,7 @@ def test_granite_3b_instruct_2k_simple(client: DynamicClient,
         runtime (str, optional): The runtime environment. Defaults to "vLLM".
         runtime_name (str, optional): The name of the serving runtime. Defaults to "serving_runtime".
     """
-    namespace_name = model_name.lower()
+    namespace_name = model_name[:20].lower()
     create_runtime_manifest_from_template(deployment_type, runtime_image, runtime_name)
     create_isvc_manifest_from_template(deployment_type, model_name, accelerator_type=accelerator_type, gpu_count=1)
     create_s3_secret_manifest()
