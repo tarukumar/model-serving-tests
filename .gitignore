@@ -35,3 +35,4 @@ model_serving_tests/endpoint_utility/utils/__pycache__/
 model_serving_tests/tests/__pycache__/
 model_serving_tests/tests/model_deployment/__pycache__/
 model_serving_tests/tests/model_deployment/__snapshots__/test_tinyllama_1B_chat_v1/
+model_serving_tests/tests/model_deployment/__snapshots__/test_granite_3_1_2b_instruct/

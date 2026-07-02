@@ -1,0 +1,35 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: granite-3-1-2b-instruct
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --uvicorn-log-level=debug
+      - --served-model-name=granite-3-1-2b-instruct
+      - --max-model-len=10
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 18Gi
+        requests:
+          cpu: '8'
+          memory: 16Gi
+      runtime: vllm-runtime
+      storageUri: s3://odh-bucket/models/granite-3.1-2b-instruct/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null
