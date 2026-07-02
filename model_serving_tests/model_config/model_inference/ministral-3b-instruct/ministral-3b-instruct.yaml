@@ -16,12 +16,12 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/ministral/Ministral-3b-instruct/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/ministral-3b-instruct") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
-        - --max-model-len=2048
+          # - --max-model-len=2048
         - --served-model-name={{ model_name | default("ministral-3b-instruct") }}
         {% for arg in new_args %}
         - {{ arg }}
@@ -35,11 +35,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "14Gi"
+          cpu: "12"
+          memory: "28Gi"
           
         limits:
-          memory: "15Gi"
+          memory: "28Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

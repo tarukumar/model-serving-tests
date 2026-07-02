@@ -16,13 +16,13 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/TinyLlama/tinyllama-1.1b-chat-v1.0/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/tinyllama-1.1b-chat-v1.0/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
         - --served-model-name={{ model_name | default("tinyllama-1b-chat-v1") }}
-        - --max-model-len=2048
+          #- --max-model-len=2048
         {% for arg in new_args %}
         - {{ arg }}
         {% endfor %}

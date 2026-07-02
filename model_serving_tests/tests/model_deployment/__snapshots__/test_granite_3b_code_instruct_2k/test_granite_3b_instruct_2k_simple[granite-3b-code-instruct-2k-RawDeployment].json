@@ -1,0 +1,10 @@
+{
+  "finish_reason": "length",
+  "index": 0,
+  "logprobs": null,
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "stop_reason": null,
+  "text": " The code should take a list of numbers as input and output the maximum value.",
+  "token_ids": null
+}

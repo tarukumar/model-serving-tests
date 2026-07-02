@@ -16,7 +16,7 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/microsoft/phi-4") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/phi-4") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
@@ -34,8 +34,8 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "14Gi"
+          cpu: "13"
+          memory: "32Gi"
           
         limits:
           memory: "48Gi"

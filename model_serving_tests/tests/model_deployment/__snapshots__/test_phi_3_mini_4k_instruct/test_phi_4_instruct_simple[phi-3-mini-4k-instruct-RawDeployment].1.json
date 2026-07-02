@@ -1,1 +1,17 @@
-"max_sequence_length: 4096\nmax_new_tokens: 1024\n"
+{
+  "finish_reason": "length",
+  "index": 0,
+  "logprobs": null,
+  "message": {
+    "annotations": null,
+    "audio": null,
+    "content": " Certainly! Bananas and dragonfruits can be combined in various delicious ways. Here are some ideas for incorporating these fruits into your meals and snacks:\n\n1. Smoothie: Blend together bananas, dragonfruit, a handful of spinach or kale, a tablespoon of chia seeds, and a splash of almond milk or coconut water for a refreshing and nutritious smoothie.\n\n2. Fruit salad: Slice bananas and dragonfruit and mix them with other fruits like strawberries, blueberries, and kiwi. Drizzle with a bit of honey or lime juice for added flavor.\n\n3. Breakfast bowl: Top a bowl of oatmeal or granola with sliced bananas and dragonfruit. Add a dollop of Greek yogurt or almond butter for extra protein and creaminess.\n\n4. Tropical fruit parfait: Layer sliced bananas and dragonfruit with Greek yogurt and granola in a glass or jar. Top with a drizzle of honey or a sprinkle of cinnamon.\n\n5. Fruit salsa: Dice bananas and dragonfruit and mix with diced mango, red onion, cilantro, and lime juice. Serve with tortilla chips or as a topping for grilled chicken or fish.\n\n6. Fruit skewers: Thread slices of bananas and dragonfruit onto skewers with other fruits like pineapple, mango, and grapes. Serve with a yogurt dip or as a healthy snack.\n\n7. Fruit and yogurt parfait: Layer Greek yogurt, sliced bananas, and dragonfruit in a glass or jar. Top with granola and a drizzle of honey or a sprinkle of cinnamon.\n\n8. Fruit and nut butter sandwich: Spread almond butter or peanut butter on whole-grain bread and top with sliced bananas and drag",
+    "function_call": null,
+    "reasoning": null,
+    "refusal": null,
+    "role": "assistant",
+    "tool_calls": []
+  },
+  "stop_reason": null,
+  "token_ids": null
+}

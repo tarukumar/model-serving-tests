@@ -3,6 +3,9 @@ kind: ServingRuntime
 metadata:
   name: vllm-runtime
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: worker-1
+
   annotations:
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -12,13 +15,22 @@ spec:
     prometheus.io/port: '8080'
     prometheus.io/path: "/metrics/"
   builtInAdapter:
-    modelLoadingTimeoutMillis: 90000
+    modelLoadingTimeoutMillis: 1200000
   containers:
     - args:  # Merged with args in inferenceservice
         - '--port=8080'
+        - '--host=0.0.0.0'
         - '--distributed-executor-backend=mp'
+        - '--disable-sliding-window'
+        - '--max-model-len=512'
+        - '--max-num-batched-tokens=512'
       image: {{ runtime_image }}
       name: kserve-container
+      env:
+        - name: VLLM_CPU_OMP_THREADS_BIND
+          value: auto
+        - name: VLLM_CPU_KVCACHE_SPACE
+          value: "8"
       command:
         - python3
         - '-m'

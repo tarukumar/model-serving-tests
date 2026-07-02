@@ -20,11 +20,10 @@ spec:
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
-        - --max-model-len=2048
+          #- --max-model-len=2048
         - --uvicorn-log-level=debug
         - --tokenizer-mode=mistral
-        - --limit-mm-per-prompt
-        - image=2
+        - '--limit-mm-per-prompt={"image":2}'
         - --load-format=mistral
         - --config-format=mistral
         - --served-model-name={{ model_name | default("pixtral-12b-base-2409") }}
@@ -40,11 +39,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "24Gi"
+          cpu: "16"
+          memory: "32Gi"
 
         limits:
-          memory: "30Gi"
+          memory: "32Gi"
 
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}

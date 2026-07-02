@@ -1,11 +1,15 @@
 from typing import Any, Callable
 import pytest
+import re
+import subprocess
+import csv
+import os
 from kubernetes.dynamic.client import DynamicClient
 from ocp_resources.resource import Resource
 from model_serving_tests.endpoint_utility.openai_utility import OpenAIClient
 from model_serving_tests.endpoint_utility.grpc_utility import TGISGRPCPlugin
 from model_serving_tests.tests.utils import create_runtime_manifest_from_template, create_isvc_manifest_from_template, \
-    get_predictor_pod, create_s3_secret_manifest
+    get_predictor_pod, create_s3_secret_manifest, get_vllm_version, get_vllm_throughput_logs, parse_vllm_logs, save_performance_report
 import logging
 import time
 
@@ -25,7 +29,6 @@ CHAT_QUERY = [
         "content": "。桜の木は、桜の花が咲くと"
     }
 ]
-
 
 @pytest.mark.smoke
 @pytest.mark.parametrize("deployment_type", DEPLOYMENT_TYPES)
@@ -106,8 +109,18 @@ def test_elyza_japanese_llama_2_7b_simple(client: DynamicClient,
         url = "http://localhost:8080"
 
         openai_client = OpenAIClient(host=url, model_name=model_name)
+
+        #Get vLLM version
+        vllm_version = get_vllm_version(namespace_name, predictor_pod.name)
+
         completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY)
+
+        used_entries_chat = set()
+        start_time = time.strftime("%H:%M:%S")
         chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY)
+        time.sleep(2)
+        chat_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
+        save_performance_report(model_name, vllm_version, chat_logs, "chat", CHAT_QUERY[0]["content"], start_time, used_entries_chat)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot

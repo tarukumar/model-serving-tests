@@ -21,7 +21,7 @@ spec:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
-        - --max-model-len=2048
+          # - --max-model-len=2048
         - --served-model-name={{ model_name | default("ministral-8b-instruct-2410") }}
         {% for arg in new_args %}
         - {{ arg }}

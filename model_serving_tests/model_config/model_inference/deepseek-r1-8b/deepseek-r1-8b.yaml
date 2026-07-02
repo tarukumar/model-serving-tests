@@ -16,12 +16,12 @@ spec:
       modelFormat:
         name: {{ model_format | default("pytorch") }}
       runtime: {{ runtime_name | default("vllm-runtime") }}
-      storageUri: {{ storage_uri | default("s3://ods-ci-wisdom/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/") }}
+      storageUri: {{ storage_uri | default("s3://odh-bucket/models/deepseek-r1-distill-llama-8b/") }}
       args:
         - --dtype=bfloat16
         - --model=/mnt/models
         - --uvicorn-log-level=debug
-        - --max-model-len=2048
+          #- --max-model-len=2048
         - --served-model-name={{ model_name | default("deepseek-r1-distill-llama-8b") }}
         {% for arg in new_args %}
         - {{ arg }}
@@ -35,11 +35,11 @@ spec:
         {% endfor %}
       resources:
         requests:
-          cpu: "8"
-          memory: "14Gi"
+          cpu: "13"
+          memory: "24Gi"
           
         limits:
-          memory: "24Gi"
+          memory: "30Gi"
       volumeMounts:
         {% if gpu_count | default(0) | int >= 2 %}
         - name: shared-memory

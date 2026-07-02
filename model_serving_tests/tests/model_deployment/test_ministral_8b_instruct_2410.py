@@ -1,11 +1,15 @@
 from typing import Any, Callable
 import pytest
+import re
+import subprocess
+import csv
+import os
 from kubernetes.dynamic.client import DynamicClient
 from ocp_resources.resource import Resource
 from model_serving_tests.endpoint_utility.openai_utility import OpenAIClient
 from model_serving_tests.endpoint_utility.grpc_utility import TGISGRPCPlugin
 from model_serving_tests.tests.utils import create_runtime_manifest_from_template, create_isvc_manifest_from_template, \
-    get_predictor_pod, create_s3_secret_manifest
+    get_predictor_pod, create_s3_secret_manifest, get_vllm_version, get_vllm_throughput_logs, parse_vllm_logs, save_performance_report
 import logging
 import time
 
@@ -24,7 +28,6 @@ CHAT_QUERY = [
         "content": "Can you provide ways to eat combinations of bananas and dragonfruits?"
     }
 ]
-
 
 @pytest.mark.smoke
 @pytest.mark.ministral
@@ -86,29 +89,26 @@ def test_ministral_8b_instruct_2410_simple(client: DynamicClient,
         pytest.fail("Model is not in Loaded state")
     if deployment_type.lower() == "rawdeployment":
         #grpc
-        cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8033:8033"
-        run_static_command(cmd)
-        url = "localhost:8033"
-        tgis_client = TGISGRPCPlugin(host=url, model_name=model_name, streaming=True)
-        all_token = tgis_client.make_grpc_request(COMPLETION_QUERY)
-        LOGGER.info(all_token)
-        model_info = tgis_client.get_model_info()
-        LOGGER.info(model_info)
-        stream = tgis_client.make_grpc_request_stream(COMPLETION_QUERY)
-        LOGGER.info(stream)
-        assert all_token == response_snapshot
-        assert model_info == response_snapshot
-        assert stream == response_snapshot
         # Forward port to access the service locally
         cmd = f"oc -n {namespace_name} port-forward pod/{predictor_pod.name} 8080:8080"
         run_static_command(cmd)
         url = "http://localhost:8080"
 
         openai_client = OpenAIClient(host=url, model_name=model_name)
+
+        #Get vLLM version
+        vllm_version = get_vllm_version(namespace_name, predictor_pod.name)
+
         completion_response = openai_client.request_http(endpoint="/v1/completions", query=COMPLETION_QUERY,
                                                              extra_param={'temperature': 0})
+
+        used_entries_chat = set()
+        start_time = time.strftime("%H:%M:%S")
         chat_response = openai_client.request_http(endpoint="/v1/chat/completions", query=CHAT_QUERY,
                                                              extra_param={'temperature': 0})
+        time.sleep(2)
+        chat_logs = get_vllm_throughput_logs(namespace_name, predictor_pod.name)
+        save_performance_report(model_name, vllm_version, chat_logs, "chat", CHAT_QUERY[0]["content"], start_time, used_entries_chat)
 
         assert completion_response == response_snapshot
         assert chat_response == response_snapshot

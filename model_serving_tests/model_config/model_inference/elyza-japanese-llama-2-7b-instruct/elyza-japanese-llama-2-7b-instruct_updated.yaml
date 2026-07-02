@@ -1,0 +1,36 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/enable-prometheus-scraping: 'true'
+  labels:
+    opendatahub.io/dashboard: 'true'
+  name: elyza-japanese-llama-2-7b-instruct
+spec:
+  predictor:
+    minReplicas: 1
+    model:
+      args:
+      - --dtype=bfloat16
+      - --model=/mnt/models
+      - --max-model-len=2048
+      - --uvicorn-log-level=debug
+      - --chat-template=/app/data/template/template_chatml.jinja
+      - --served-model-name=elyza-japanese-llama-2-7b-instruct
+      env:
+      - name: HF_HUB_CACHE
+        value: /tmp
+      modelFormat:
+        name: pytorch
+      resources:
+        limits:
+          memory: 28Gi
+        requests:
+          cpu: '12'
+          memory: 24Gi
+      runtime: vllm-runtime
+      storageUri: s3://odh-bucket/models/ELYZA-japanese-Llama-2-7b-instruct/
+      volumeMounts: null
+    serviceAccountName: modelmesh-serving-sa
+    volumes: null
